@@ -8,7 +8,6 @@ home_config = "#{home}/.config"
 def mkdir(source)
   system("mkdir -p #{source}")
 end
-  
 
 def link(source, destination)
   print("Linking #{source} -> #{destination}\n")
