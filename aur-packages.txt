@@ -23,7 +23,7 @@ discord
 ttf-hack-ibx
 #nerd-fonts
 ttf-font-awesome-4
-#ttf-material-icons
+ttf-material-icons
 #nerd-fonts-complete
 
 refind-theme-regular-git

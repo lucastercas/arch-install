@@ -81,10 +81,13 @@ sakura
 xfce4-terminal
 
 ## Coding
-#code
+code
 vim
+ripgrep
 neovim
-#mousepad
+mousepad
+zsh-completions
+bash-completions
 python-neovim
 git
 #npm
@@ -185,3 +188,5 @@ libwmf
 
 light
 geoclue
+ntp
+trash-cli

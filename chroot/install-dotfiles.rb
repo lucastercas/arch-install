@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+
 home = Dir.home()
 
-dotfile_config = "#{home}/git/arch-install/chroot"
+dotfile_config = "#{home}/git/arch-install/chroot/dotfiles/config"
 home_config = "#{home}/.config"
 
 def mkdir(source)
