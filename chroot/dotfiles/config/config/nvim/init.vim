@@ -112,7 +112,9 @@ Plug 'morhetz/gruvbox'
 "intellisense, completion, linting, fixing, documentation lookup
 Plug 'neoclide/coc.nvim' , {'tag': '*', 'do': { -> coc#util#install()}}
 "fzf, search, file manager
-Plug 'Shougo/denite.nvim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"Plug 'Shougo/denite.nvim'
 "Status Bar
 Plug 'itchyny/lightline.vim'
 "language highlight
@@ -135,7 +137,6 @@ Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 filetype plugin indent on
 
-
 "===== plugins settings ====="
 " -- DART & FLUTTER --"
 let dart_style_guide=2
@@ -143,39 +144,6 @@ let dart_format_on_save=1
 " -- INDENT LINE --"
 let g:indentLine_setColors = 0
 let g:indentLine_char = '|'	
-" -- DENITE -- "
-try
-  " use ripgrep instead of grep
-  call denite#custom#var('grep', 'command', ['rg'])
-  call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-  call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'final_opts', [])
-  "remove date from buffer list
-  call denite#custom#var('buffer', 'date_format', '')
-  let s:denite_options = {'default': {
-    \ 'auto_resize': 1,
-    \ 'direction': 'rightbelow',
-    \ 'highlight_mode_insert': 'Visual',
-    \ 'highlight_mode_normal': 'Visual',
-    \ 'prompt_highlight': 'Function',
-    \ 'highlight_matched_char': 'Function',
-    \ 'highlight_matched_range': 'Normal',
-    \ }}
-  " Loop through denite options and enable them
-  function! s:profile(opts) abort
-    for l:fname in keys(a:opts)
-      for l:dopt in keys(a:opts[l:fname])
-        call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-      endfor
-    endfor
-  endfunction
-  call s:profile(s:denite_options)
-catch
-  echo 'Install Plugins First'
-endtry
 
 " -- COC -- "
 "let g:coc_force_debug=1
@@ -217,15 +185,14 @@ let g:UltiSnipsExpandTrigger='<tab>'
 let g:UltiSnipsJumpForwardTrigger='<tab>'
 let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
 let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsSnippetsDir="/home/lucastercas/git/dotfiles/config/nvim/snippets"
-let g:UltiSnipsSnippetDirectories=["/home/lucastercas/git/dotfiles/config/nvim/snippets", "UltiSnips"]
+let g:UltiSnipsSnippetsDir="~/git/dotfiles/config/nvim/snippets"
+let g:UltiSnipsSnippetDirectories=["~/git/dotfiles/config/nvim/snippets", "UltiSnips"]
 
 "===== plugins mappings ====="
-"denite
-nmap <F5> :Denite buffer -winrow=1<CR>
-nmap <C-p> :Denite file/rec -split=floating -winrow=2<CR>
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
-nnoremap <leader>g :<C-u>Denite grep:. -mode=normal<CR>
+" FZF
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <leader><space> :Buffers<CR>
+nnoremap <silent> <C-g> :Rg<Cr>
 
 "coc
 "inoremap <silent><expr> <c-space> coc#refresh()
@@ -243,15 +210,9 @@ nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
 inoremap <silent><expr> <c-space> coc#refresh()
 nmap <silent> <leader>[ <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>] <Plug>(coc-diagnostic-next)
-nmap <leader>ac <Plug>(coc-codeaction)
-nmap <leader>af <Plug>(coc-fix-current)
+"nmap <leader>ac <Plug>(coc-codeaction)
+"nmap <leader>af <Plug>(coc-fix-current)
 command! -nargs=0 Format :call CocAction('format')
-
-nnoremap <leader>fa :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fr :FlutterHotReload<cr>
-nnoremap <leader>fR :FlutterHotRestart<cr>
-nnoremap <leader>fD :FlutterVisualDebug<cr>
 
 augroup my_autocmd
   autocmd FileType dart nnoremap <buffer> <leader>f :!dartfmt -w .<cr>
