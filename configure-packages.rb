@@ -15,6 +15,7 @@ end
 def installDefaultPackages()
   puts 'Installing Arch Packages'
   default_packages = getPackagesFromFile('default-packages.txt')
+  puts "sudo pacman -S #{default_packages}"
   system "sudo pacman -S #{default_packages}"
 end
 

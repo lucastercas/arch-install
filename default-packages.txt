@@ -87,7 +87,6 @@ ripgrep
 neovim
 mousepad
 zsh-completions
-bash-completions
 python-neovim
 git
 #npm
