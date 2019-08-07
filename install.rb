@@ -136,3 +136,13 @@ puts "User: "
 username = gets.chomp
 puts "#{chroot_cmd} useradd -m -G wheel -s /bin/zsh -c 'Lucas Tercas' #{username}"
 puts "#{chroot_cmd} passwd #{username}"
+
+puts "=== Enabling Services ==="
+puts "systemctl enable NetworkManager.service"
+puts "systemctl enable redshift-gtk.service"
+puts "systemctl enable bluetooth.service"
+puts "systemctl enable lightdm.service"
+puts "systemctl enable ntpd.service"
+puts "systemctl enable nptdate.service"
+puts "systemctl enable paccache.timer"
+puts "systemctl enable lightdm.service"
