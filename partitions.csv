@@ -1,0 +1,4 @@
+num,name,start,end,code,mount_point
+1,efi,0,+512MiB,ef00,/efi
+2,root,0,+12GiB,8300,
+3,home,0,+15GiB,8302,/home
