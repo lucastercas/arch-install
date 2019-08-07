@@ -25,6 +25,7 @@ end
 
 def createPartition(disk, partition)
     puts "=== Creating partition #{partition[0]} - Size: #{partition[2]} - #{partition[3]} ==="
+    puts "==> sgdisk -n #{partition[0]}:#{partition[2]}:#{partition[3]} -c #{partition[0]}:\"#{partition[1]}\" -t #{partition[0]}:#{partition[4]} #{disk}"
     system "sgdisk -n #{partition[0]}:#{partition[2]}:#{partition[3]} -c #{partition[0]}:\"#{partition[1]}\" -t #{partition[0]}:#{partition[4]} #{disk}"
 end
 
@@ -32,13 +33,18 @@ def formatPartition(disk, partition)
   volume = "#{disk}#{partition[0]}"
   case partition[4]
   when "ef00"
+    puts "==> mkfs.vfat -F32 #{volume}"
     system "mkfs.vfat -F32 #{volume}"
   when "8200"
+    puts "==> mkswap #{volume}"
     system "mkswap #{volume}"
-    system "swapon #{volume}"
+    puts "==> sudo swapon #{volume}"
+    system "sudo swapon #{volume}"
   when "8300"
-    system "mkfs.ext4 #{volume}"
+    puts "==> sudo mkfs.ext4 #{volume}"
+    system "sudo mkfs.ext4 #{volume}"
   when "8302"
+    puts "==> mkfs.ext4 #{volume}"
     system "mkfs.ext4 #{volume}"
   else
     puts "Code #{partition[4]} not recognized"
@@ -47,7 +53,9 @@ end
 
 def mountPartition(disk, partition)
   puts "=== Mounting Partiton #{partition[1]}"
+  puts "==> sudo mkdir -p /mnt#{partition[5]}"
   system "sudo mkdir -p /mnt#{partition[5]}"
+  puts "==> sudo mount #{disk}#{partition[0]} /mnt#{partition[5]}"
   system "sudo mount #{disk}#{partition[0]} /mnt#{partition[5]}"
 end
 
@@ -66,7 +74,6 @@ def configureDisk(disk)
   mountPartition(disk, partitions[2])
   mountPartition(disk, partitions[1])
   mountPartition(disk, partitions[3])
-
 end
 
 def getPackagesFromFile(file)
@@ -98,44 +105,46 @@ puts "\n### Disk Preparation ###"
 puts  "== Configuring Disk =="
 puts "=> Disk To Configure: (Ex: /dev/sda)"
 disk = gets.chomp
-configureDisk(disk)
+#configureDisk(disk)
 
-#puts  "== Configuring Pacstrap =="
-#system "pacstrap -i /mnt base-devel"
-#system "genfstab -U -p /mnt >> /mnt/etc/fstab"
-#
+puts  "== Configuring Pacstrap =="
+puts "==> pacstrap -i /mnt base-devel"
+system "sudo pacstrap -i /mnt base base-devel"
+puts "==> genfstab -U -p /mnt >> /mnt/etc/fstab"
+system "genfstab -U -p /mnt >> /mnt/etc/fstab"
+
 #puts "\n### chroot ###"
 #chroot_cmd = "arch-chroot /mnt"
-#
+
 #puts "=== Configuring Locale ==="
 #system "#{chroot_cmd} ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime"
 #system "#{chroot_cmd} sed -i 's/pt_BR.UTF-8/pt_BR.UTF-8/' /etc/locale.gen"
 #system "#{chroot_cmd} locale-gen"
 #system "#{chroot_cmd} hwclock --systohc"
 #system "#{chroot_cmd} echo 'LANG=pt_BR.UTF-8' >> /etc/locale.conf"
-#
+
 #puts "=== Installing Additional Packages ==="
 #default_packages = getPackagesFromFile('default-packages.txt')
 #system "#{chroot_cmd} pacman -S #{default_packages}"
-#
+
 #puts "=== Configuring Hostname ==="
 #puts "Hostname: "
 #hostname = gets.chomp
 #system "#{chroot_cmd} echo #{hostname} >> /etc/hostname"
-#
+
 #system "#{chroot_cmd} mkinitcpio -p linux"
-#
+
 #system "#{chroot_cmd} passwd"
-#
+
 #puts "=== Configuring BootLoader (rEFInd) ==="
 #system "#{chroot_cmd} refind-install"
-#
+
 #puts "=== Configuring User ==="
 #puts "User: "
 #username = gets.chomp
 #system "#{chroot_cmd} useradd -m -G wheel -s /bin/zsh -c 'Lucas Tercas' #{username}"
 #system "#{chroot_cmd} passwd #{username}"
-#
+
 #puts "=== Enabling Services ==="
 #system "#{chroot_cmd} systemctl enable NetworkManager.service"
 #system "#{chroot_cmd} systemctl enable redshift-gtk.service"
