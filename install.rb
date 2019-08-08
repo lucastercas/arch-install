@@ -76,17 +76,7 @@ def configureDisk(disk)
   mountPartition(disk, partitions[3])
 end
 
-def getPackagesFromFile(file)
-  packages_file = File.open(file)
-  packages = []
-  packages_file.each_line do |line|
-    if line[0] != '#' then
-      packages.append(line.gsub("\n", ''))
-    end
-  end
-  packages = packages.join(' ')
-  return packages
-end
+
 
 puts "##### Arch Install #####"
 
@@ -102,55 +92,25 @@ puts "\n### Disk Preparation ###"
 #puts "Configuring Keyboard to #{kb_layout}"
 #puts "loadkeys #{kb_layout}"
 
-puts  "== Configuring Disk =="
+system "sudo su"
+
+puts  "=== Configuring Disk ==="
 puts "=> Disk To Configure: (Ex: /dev/sda)"
-disk = gets.chomp
+#disk = gets.chomp
 #configureDisk(disk)
 
-puts  "== Configuring Pacstrap =="
+puts  "=== Configuring Pacstrap =="
 puts "==> pacstrap -i /mnt base-devel"
-system "sudo pacstrap -i /mnt base base-devel"
+#system "pacstrap -i /mnt base base-devel ruby"
 puts "==> genfstab -U -p /mnt >> /mnt/etc/fstab"
-system "genfstab -U -p /mnt >> /mnt/etc/fstab"
+#system "genfstab -U -p /mnt >> /mnt/etc/fstab"
 
-#puts "\n### chroot ###"
-#chroot_cmd = "arch-chroot /mnt"
+puts "=== Copying Installation Script into chroot Env ==="
+system "cp ./install-chroot.rb /mnt/opt/"
+system "cp ./default-packages.txt /mnt/opt/"
 
-#puts "=== Configuring Locale ==="
-#system "#{chroot_cmd} ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime"
-#system "#{chroot_cmd} sed -i 's/pt_BR.UTF-8/pt_BR.UTF-8/' /etc/locale.gen"
-#system "#{chroot_cmd} locale-gen"
-#system "#{chroot_cmd} hwclock --systohc"
-#system "#{chroot_cmd} echo 'LANG=pt_BR.UTF-8' >> /etc/locale.conf"
+puts "=== Entering chroot Env ==="
+puts "==> arch-chroot /mnt ruby /opt/install-chroot.rb"
+system "arch-chroot /mnt ruby /opt/install-chroot.rb"
 
-#puts "=== Installing Additional Packages ==="
-#default_packages = getPackagesFromFile('default-packages.txt')
-#system "#{chroot_cmd} pacman -S #{default_packages}"
 
-#puts "=== Configuring Hostname ==="
-#puts "Hostname: "
-#hostname = gets.chomp
-#system "#{chroot_cmd} echo #{hostname} >> /etc/hostname"
-
-#system "#{chroot_cmd} mkinitcpio -p linux"
-
-#system "#{chroot_cmd} passwd"
-
-#puts "=== Configuring BootLoader (rEFInd) ==="
-#system "#{chroot_cmd} refind-install"
-
-#puts "=== Configuring User ==="
-#puts "User: "
-#username = gets.chomp
-#system "#{chroot_cmd} useradd -m -G wheel -s /bin/zsh -c 'Lucas Tercas' #{username}"
-#system "#{chroot_cmd} passwd #{username}"
-
-#puts "=== Enabling Services ==="
-#system "#{chroot_cmd} systemctl enable NetworkManager.service"
-#system "#{chroot_cmd} systemctl enable redshift-gtk.service"
-#system "#{chroot_cmd} systemctl enable bluetooth.service"
-#system "#{chroot_cmd} systemctl enable lightdm.service"
-#system "#{chroot_cmd} systemctl enable ntpd.service"
-#system "#{chroot_cmd} systemctl enable nptdate.service"
-#system "#{chroot_cmd} systemctl enable paccache.timer"
-#system "#{chroot_cmd} systemctl enable lightdm.service"
