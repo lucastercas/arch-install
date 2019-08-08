@@ -38,11 +38,11 @@ def formatPartition(disk, partition)
   when "8200"
     puts "==> mkswap #{volume}"
     system "mkswap #{volume}"
-    puts "==> sudo swapon #{volume}"
-    system "sudo swapon #{volume}"
+    puts "==> swapon #{volume}"
+    system "swapon #{volume}"
   when "8300"
-    puts "==> sudo mkfs.ext4 #{volume}"
-    system "sudo mkfs.ext4 #{volume}"
+    puts "==> mkfs.ext4 #{volume}"
+    system "mkfs.ext4 #{volume}"
   when "8302"
     puts "==> mkfs.ext4 #{volume}"
     system "mkfs.ext4 #{volume}"
@@ -53,10 +53,10 @@ end
 
 def mountPartition(disk, partition)
   puts "=== Mounting Partiton #{partition[1]}"
-  puts "==> sudo mkdir -p /mnt#{partition[5]}"
-  system "sudo mkdir -p /mnt#{partition[5]}"
-  puts "==> sudo mount #{disk}#{partition[0]} /mnt#{partition[5]}"
-  system "sudo mount #{disk}#{partition[0]} /mnt#{partition[5]}"
+  puts "==> mkdir -p /mnt#{partition[5]}"
+  system "mkdir -p /mnt#{partition[5]}"
+  puts "==> mount #{disk}#{partition[0]} /mnt#{partition[5]}"
+  system "mount #{disk}#{partition[0]} /mnt#{partition[5]}"
 end
 
 def configureDisk(disk)
@@ -76,8 +76,6 @@ def configureDisk(disk)
   mountPartition(disk, partitions[3])
 end
 
-
-
 puts "##### Arch Install #####"
 
 puts "\n### Disk Preparation ###"
@@ -92,18 +90,16 @@ puts "\n### Disk Preparation ###"
 #puts "Configuring Keyboard to #{kb_layout}"
 #puts "loadkeys #{kb_layout}"
 
-system "sudo su"
-
 puts  "=== Configuring Disk ==="
 puts "=> Disk To Configure: (Ex: /dev/sda)"
-#disk = gets.chomp
-#configureDisk(disk)
+disk = gets.chomp
+configureDisk(disk)
 
 puts  "=== Configuring Pacstrap =="
 puts "==> pacstrap -i /mnt base-devel"
-#system "pacstrap -i /mnt base base-devel ruby"
+system "pacstrap -i /mnt base base-devel ruby"
 puts "==> genfstab -U -p /mnt >> /mnt/etc/fstab"
-#system "genfstab -U -p /mnt >> /mnt/etc/fstab"
+system "genfstab -U -p /mnt >> /mnt/etc/fstab"
 
 puts "=== Copying Installation Script into chroot Env ==="
 system "cp ./install-chroot.rb /mnt/opt/"
