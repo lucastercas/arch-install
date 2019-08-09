@@ -42,6 +42,7 @@ xdg-utils
 gtk3
 gtk2
 lightdm
+lightdm-gtk-greeter
 lightdm-webkit2-greeter
 i3-gaps
 nitrogen
@@ -189,3 +190,5 @@ light
 geoclue
 ntp
 trash-cli
+xscreensaver
+
