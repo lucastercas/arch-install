@@ -26,12 +26,6 @@ void init_colors() {
   init_pair(3, COLOR_RED, COLOR_WHITE);
 }
 
-// Draws the main border around the terminal
-void draw_border() {
-  clear();
-  box(stdscr, '*', '*');
-}
-
 WINDOW* create_window(int lines, int cols, int y0, int x0) {
   WINDOW* newWin =  newwin(lines, cols, y0, x0);
   box(newWin, '*', '*');
@@ -47,14 +41,10 @@ int main() {
   int height, width;
   getmaxyx(stdscr, height, width);
 
-  std::string greetings = "Welcome to Arch Installation\n";
-  mvwaddstr(stdscr, 1, (width/2)-greetings.size()/2, greetings.c_str());
+  // std::string greetings = "Welcome to Arch Installation\n";
+  // mvwaddstr(stdscr, 1, (width/2)-greetings.size()/2, greetings.c_str());
 
-  int c;
-  c = getch();
-  char* input;
-
-  draw_init_screen();
+  init_screen::draw_screen();
   
   endwin();
   return 0;
