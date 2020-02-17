@@ -54,11 +54,7 @@ int main() {
   c = getch();
   char* input;
 
-  do {
-    draw_init_screen();
-    wrefresh(stdscr);
-    c = getch();
-  } while(c != KEY_F(1));
+  draw_init_screen();
   
   endwin();
   return 0;

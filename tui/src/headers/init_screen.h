@@ -3,7 +3,8 @@
 
 #include <ncurses.h>
 #include <string>
-#include <list>
+#include <vector>
+#include <utility>
 
 void draw_init_screen();
 #endif
