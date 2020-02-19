@@ -22,7 +22,7 @@ end
 def installDefaultPackages(chroot)
   puts "=== Installing Packages ==="
   default_packages= getPackagesFromFile("./default-packages.txt")
-  system "#{chroot} pacman -S #{default_packages}"
+  system "#{chroot} pacman --noconfirm -S #{default_packages}"
 end
 
 def addUser(chroot)

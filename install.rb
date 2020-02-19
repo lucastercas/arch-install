@@ -3,9 +3,10 @@
 # Author: Lucas de Macedo
 # Github: lucastercas
 
-require '.src/setup_disk.rb'
-require '.src/setup_pacstrap.rb'
-require '.src/genfstab.rb'
+require './src/setup_disk.rb'
+require './src/setup_pacstrap.rb'
+require './src/genfstab.rb'
+require './src/chroot.rb'
 
 def getOption(question)
   puts "=> #{question} [N]o / [Y]es:"
