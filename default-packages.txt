@@ -8,37 +8,19 @@ refind-efi
 dialog
 gnupg
 xterm
-
-## Network
 networkmanager
 wpa_supplicant
-#blueberry
-#bluez
-#bluez-utils
 network-manager-applet
 openssh
-
-## Drivers
 xf86-input-mouse
 xf86-input-keyboard
-acpi
-bc
-lm_sensors
-
-## Video
-xf86-video-vesa
-xf86-video-intel
 xorg-server
 xorg-xinit
-xorg-xbacklight
-xorg-server-xephyr
 xorg-xrandr
 xorg-xwininfo
 xorg-xprop
 xorg-drivers
 xdg-utils
-
-## 
 gtk3
 gtk2
 lightdm
@@ -49,67 +31,21 @@ nitrogen
 lxappearance
 pcmanfm-gtk3
 arandr
-
-## Document Viewer
 zathura
-evince
-feh
-#inkscape
-#gimp
-#imagemagick
-#libreoffice
-
-## Image
-scrot
-tumbler
-libraw
-raw-thumbnailer
-ffmpegthumbnailer
-
-## App Launcher
 dmenu
 rofi
-
-## Printer
-sane
 cups
 cups-pdf
-system-config-printer
-
-## Terminals
 zsh
-sakura
 xfce4-terminal
-
-## Coding
-code
 vim
-ripgrep
-neovim
 mousepad
 zsh-completions
-python-neovim
 git
-#npm
-#tidy
-
-## Zip
-zip
-unrar
-p7zip
-
-## Tools
 sysstat
 wget
-neofetch
-screenfetch
-tree
-htop
-hdparm
 util-linux
 xclip
-
-## Audio
 mpd
 pavucontrol
 playerctl
@@ -121,19 +57,9 @@ pulseaudio-equalizer
 pulseaudio-jack
 pulseaudio-lirc
 pulseaudio-zeroconf
-
-## Browser
-firefox
-w3m
-#chromium
-#unichrome-dri
-
-## Notification
 dunst
 notification-daemon
 libnotify
-
-## Compiler
 tk
 ctags
 ruby
@@ -143,52 +69,20 @@ python
 java-runtime
 help2man
 pandoc
-
-## Latex
-#texlive-most
-#biber
-#texlive-lang
-
-## Font
 freetype2
 ttf-hack
-
-## File System
 libgsf
 btrfs-progs
 ntfs-3g
 udftools
 nilfs-utils
-gvfs
-gvfs-afc
-gvfs-smb
-gvfs-gphoto2
-gvfs-mtp
-gvfs-nfs
-gvfs-google
-xarchiver
 file-roller
 parted
-gparted
-gpart
 rsync
-
-## Pacman
 pacman-contrib
-#reflector
-
-postgresql
-#mariadb-libs
-
-xfce4-screenshooter
-accountsservice
-zenity
-udisks2
+acco
+untsservice
 libwmf
-
-light
 geoclue
 ntp
-trash-cli
 xscreensaver
-
