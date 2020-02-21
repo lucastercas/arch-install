@@ -16,7 +16,7 @@ def createPartition(disk, partition)
   puts "--- Creating partition #{partition[0]} - Size: #{partition[2]} - #{partition[3]} ---"
   cmd = "sgdisk -n #{partition[0]}:#{partition[2]}:#{partition[3]} -c #{partition[0]}:\"#{partition[1]}\" -t #{partition[0]}:#{partition[4]} #{disk}"
   puts "-> #{cmd}"
-  # system "cmd"
+  system cmd
 end
 
 def formatPartition(disk, partition)
@@ -24,18 +24,18 @@ def formatPartition(disk, partition)
   case partition[4]
   when "ef00"
     puts "-> mkfs.vfat -F32 #{volume}"
-    # system "mkfs.vfat -F32 #{volume}"
+    system "mkfs.vfat -F32 #{volume}"
   when "8200"
     puts "-> mkswap #{volume}"
-    # system "mkswap #{volume}"
+    system "mkswap #{volume}"
     puts "-> swapon #{volume}"
-    # system "swapon #{volume}"
+    system "swapon #{volume}"
   when "8300"
     puts "-> mkfs.ext4 #{volume}"
-    # system "mkfs.ext4 #{volume}"
+    system "mkfs.ext4 #{volume}"
   when "8302"
     puts "-> mkfs.ext4 #{volume}"
-    # system "mkfs.ext4 #{volume}"
+    system "mkfs.ext4 #{volume}"
   else
     puts "Code #{partition[4]} not recognized"
   end

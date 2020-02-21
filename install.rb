@@ -3,7 +3,10 @@
 # Author: Lucas de Macedo
 # Github: lucastercas
 
-require './setup_disk.rb'
+require './src/setup_disk.rb'
+require './src/setup_pacstrap.rb'
+require './src/genfstab.rb'
+require './src/chroot.rb'
 
 def getOption(question)
   puts "=> #{question} [N]o / [Y]es:"
@@ -29,8 +32,11 @@ def main()
       when 1
         configureDiskMenu()
       when 2
+        setupPacstrap()
       when 3
+        genfstab()
       when 4
+        chrootOptionsMenu()
       when 5
         break
     end
@@ -38,36 +44,3 @@ def main()
 end
 
 main()
-
-# puts "\n### Disk Preparation ###"
-
-#puts  "== Configuring Time and Date =="
-#puts "timedatectl set-ntp true"
-
-#puts "== Configuring Keyboard =="
-#puts "=> Layout of the keyboard: (ex: br-abnt2)"
-#kb_layout = gets.chomp
-#kb_layout = 'br-abnt2'
-#puts "Configuring Keyboard to #{kb_layout}"
-#puts "loadkeys #{kb_layout}"
-
-# puts  "=== Configuring Disk ==="
-# puts "=> Disk To Configure: (Ex: /dev/sda)"
-# disk = gets.chomp
-# configureDisk(disk)
-
-# puts  "=== Configuring Pacstrap =="
-# puts "==> pacstrap -i /mnt base-devel"
-# system "pacstrap -i /mnt base base-devel ruby"
-# puts "==> genfstab -U -p /mnt >> /mnt/etc/fstab"
-# system "genfstab -U -p /mnt >> /mnt/etc/fstab"
-
-# puts "=== Copying Installation Script into chroot Env ==="
-# system "cp ./install-chroot.rb /mnt/opt/"
-# system "cp ./default-packages.txt /mnt/opt/"
-
-# puts "=== Entering chroot Env ==="
-# puts "==> arch-chroot /mnt ruby /opt/install-chroot.rb"
-# system "arch-chroot /mnt ruby /opt/install-chroot.rb"
-
-
