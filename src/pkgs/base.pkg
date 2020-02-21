@@ -11,6 +11,7 @@ dialog
 wifi-menu
 xterm
 networkmanager
+netctl
 wpa_supplicant
 wget
 curl
