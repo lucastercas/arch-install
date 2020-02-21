@@ -4,6 +4,7 @@ efibootmgr
 dosfstools
 od-prober
 mtools
+linux
 linux-headers
 refind-efi
 dialog
