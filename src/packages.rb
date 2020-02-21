@@ -29,26 +29,28 @@ def installPackagesMenu()
     puts "8 - Docker"
     puts "9 - Languages"
     puts "0 - Back"
-    when 1
-      installPackages("base.pkg")
-    when 2
-      installPackages("graphical.pkg")
-    when 3
-      installPackages("file-manager.pkg")
-    when 4
-      installPackages("audio.pkg")
-    when 5
-      installPackages("development.pkg")
-    when 6
-      installPackages("fonts.pkg")
-    when 7
-      installPackages("bluetooth.pkg")
-    when 8
-      installPackages("docker.pkg")
-    when 9
-      installPackages("languages.pkg")
-    when 0
-      break
+    option = gets.chomp.to_i
+    case option
+      when 1
+        installPackages("base.pkg")
+      when 2
+        installPackages("graphical.pkg")
+      when 3
+        installPackages("file-manager.pkg")
+      when 4
+        installPackages("audio.pkg")
+      when 5
+        installPackages("development.pkg")
+      when 6
+        installPackages("fonts.pkg")
+      when 7
+        installPackages("bluetooth.pkg")
+      when 8
+        installPackages("docker.pkg")
+      when 9
+        installPackages("languages.pkg")
+      when 0
+        break
     end
   end
 end
