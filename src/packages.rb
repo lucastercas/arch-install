@@ -11,13 +11,13 @@ def getPackagesFromFile(file)
 end
 
 def installPackages(file)
-  packages = getPackagesFromFile("pkgs/#{file}")
+  packages = getPackagesFromFile("./src/pkgs/#{file}")
   cmd = "arch-chroot /mnt pacman -S #{packages}"
   puts "--> #{cmd}"
   system(cmd)
 end
 
-def installPackagesMenu(chroot)
+def installPackagesMenu(chrootl)
   while true do
     puts "1 - Base"
     puts "2 - Graphical"
