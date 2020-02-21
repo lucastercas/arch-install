@@ -1,0 +1,10 @@
+mpd
+playerctl
+alsa-utils
+pulseaudio
+pulseaudio-alsa
+pulseaudio-equalizer
+pulseaudio-jack
+pulseaudio-lirc
+pulseaudio-zeroconf
+pulseaudio-bluetooth

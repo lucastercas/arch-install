@@ -1,14 +1,4 @@
-def getPackagesFromFile(file)
-  packages_file = File.open(file)
-  packages = []
-  packages_file.each_line do |line|
-    if line[0] != '#' then
-      packages.append(line.gsub("\n", ''))
-    end
-  end
-  packages = packages.join(' ')
-  return packages
-end
+require './src/packages.rb'
 
 def configureLocale(chroot)
   puts "=== Configure Locale ==="
@@ -19,19 +9,11 @@ def configureLocale(chroot)
   system "#{chroot} echo LANG=pt_BR.UTF-8 >> /etc/locale.conf"
 end
 
-def installDefaultPackages(chroot)
-  puts "=== Installing Packages ==="
-  default_packages= getPackagesFromFile("./default-packages.txt")
-  cmd = "#{chroot} pacman --noconfirm -S #{default_packages}"
-  puts "--> #{cmd}"
-  system cmd
-end
-
 def addUser(chroot)
   puts "=== Add User ==="
   puts "username:"
   username = gets.chomp
-  cmd = "#{chroot} useradd -m -G well -s /bin/zsh -c 'Lucas Tercas' #{username}"
+  cmd = "#{chroot} useradd -m -G wheel -s /bin/zsh -c 'Lucas Tercas' #{username}"
   puts "--> #{cmd}"
   system cmd
   system "#{chroot} passwd #{username}"
@@ -79,7 +61,7 @@ def chrootOptionsMenu()
       when 1
         configureLocale(chroot)
       when 2
-        installDefaultPackages(chroot)
+        installPackagesMenu(chroot)
       when 3
         addUser(chroot)
       when 4
@@ -90,7 +72,7 @@ def chrootOptionsMenu()
         enableServices(chroot)
       when 7
         configureBootloader(chroot)
-      when 8
+      when 0
         return
     end
   end

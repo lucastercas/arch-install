@@ -8,17 +8,6 @@ require './src/setup_pacstrap.rb'
 require './src/genfstab.rb'
 require './src/chroot.rb'
 
-def getOption(question)
-  puts "=> #{question} [N]o / [Y]es:"
-  option = $stdin.gets.chomp
-
-  if option == 'Y' || option == 'y' then
-    return true
-  else
-    return false
-  end
-end
-
 def main()
   while true do
     puts "===== Welcome to the Arch Installation ====="
@@ -37,7 +26,7 @@ def main()
         genfstab()
       when 4
         chrootOptionsMenu()
-      when 5
+      when 0
         break
     end
   end
