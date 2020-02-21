@@ -49,5 +49,6 @@ def installPackagesMenu()
       installPackages("languages.pkg")
     when 0
       break
+    end
   end
 end
