@@ -55,7 +55,7 @@ def chrootOptionsMenu()
     puts "5 - Configure Hostname"
     puts "6 - Enable Services"
     puts "7 - Configure Bootloader (rEFInd)"
-    puts "8 - Back"
+    puts "0 - Back"
     option = gets.chomp.to_i
     case option
       when 1

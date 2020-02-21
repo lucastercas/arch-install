@@ -8,7 +8,6 @@ linux
 linux-headers
 refind-efi
 dialog
-wifi-menu
 xterm
 networkmanager
 netctl

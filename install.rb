@@ -15,7 +15,7 @@ def main()
     puts "2 - Pacstrap"
     puts "3 - Generate fstab"
     puts "4 - Chroot Options"
-    puts "5 - Exit"
+    puts "8 - Exit"
     option = gets.chomp.to_i
     case option
       when 1
