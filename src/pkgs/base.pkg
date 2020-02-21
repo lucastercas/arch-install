@@ -2,7 +2,7 @@ grub
 vim
 efibootmgr
 dosfstools
-od-prober
+os-prober
 mtools
 linux
 linux-headers
