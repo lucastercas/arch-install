@@ -22,14 +22,18 @@ end
 def installDefaultPackages(chroot)
   puts "=== Installing Packages ==="
   default_packages= getPackagesFromFile("./default-packages.txt")
-  system "#{chroot} pacman --noconfirm -S #{default_packages}"
+  cmd = "#{chroot} pacman --noconfirm -S #{default_packages}"
+  puts "--> #{cmd}"
+  system cmd
 end
 
 def addUser(chroot)
   puts "=== Add User ==="
   puts "username:"
   username = gets.chomp
-  system "#{chroot} useradd -m -G well -s /bin/zsh -c 'Lucas Tercas' #{username}"
+  cmd = "#{chroot} useradd -m -G well -s /bin/zsh -c 'Lucas Tercas' #{username}"
+  puts "--> #{cmd}"
+  system cmd
   system "#{chroot} passwd #{username}"
 end
 
@@ -47,7 +51,9 @@ end
 
 def enableServices(chroot)
   puts "=== Enable Services ==="
-  system "#{chroot} systemctl enable NetworkManager.service redshift-gtk.service bluetooth.service lightdm.service ntpd.service ntpdate.service paccache.service lightdm.service"
+  cmd = "#{chroot} systemctl enable NetworkManager.service redshift-gtk.service bluetooth.service lightdm.service ntpd.service ntpdate.service paccache.service lightdm.service"
+  puts "--> #{cmd}"
+  system cmd
 end
 
 def configureBootloader(chroot)
