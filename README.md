@@ -15,3 +15,8 @@ pacman -S git ruby
 ```bash
 git clone https://github.com/lucastercas/arch-install
 ```
+
+
+## Fix
+1. `Unknown type: swap` when mounting disks
+2.

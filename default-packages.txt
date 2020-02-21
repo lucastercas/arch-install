@@ -39,7 +39,6 @@ cups-pdf
 zsh
 xfce4-terminal
 vim
-mousepad
 zsh-completions
 git
 sysstat
@@ -47,12 +46,10 @@ wget
 util-linux
 xclip
 mpd
-pavucontrol
 playerctl
 alsa-utils
 pulseaudio
 pulseaudio-alsa
-pulseaudio-bluetooth
 pulseaudio-equalizer
 pulseaudio-jack
 pulseaudio-lirc
@@ -66,7 +63,6 @@ ruby
 ruby-docs
 lua
 python
-java-runtime
 help2man
 pandoc
 freetype2
@@ -80,8 +76,6 @@ file-roller
 parted
 rsync
 pacman-contrib
-acco
-untsservice
 libwmf
 geoclue
 ntp
