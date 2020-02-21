@@ -12,8 +12,6 @@ networkmanager
 wpa_supplicant
 network-manager-applet
 openssh
-xf86-input-mouse
-xf86-input-keyboard
 xorg-server
 xorg-xinit
 xorg-xrandr
