@@ -17,7 +17,7 @@ def installPackages(file)
   system(cmd)
 end
 
-def installPackagesMenu()
+def installPackagesMenu(chroot)
   while true do
     puts "1 - Base"
     puts "2 - Graphical"
