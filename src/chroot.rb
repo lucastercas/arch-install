@@ -39,9 +39,19 @@ def enableServices(chroot)
 end
 
 def configureBootloader(chroot)
-  puts "=== Configure Bootloader ==="
-  system "#{chroot} refind-install"
-  system "#{chroot} mkinitcpio -p linux"
+  puts "\n=== Configure Bootloader ==="
+  puts "==> Setup rEFInd or Grub?"
+  puts "1 - rEFInd"
+  puts "2 - Grub"
+  option = gets.chomp.to_i
+  case option
+    when 1
+       system "#{chroot} grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi"
+       system "#{chroot} grub-mkconfig -o /boot/grub/grub.cfg"
+    when 2
+      system "#{chroot} refind-install"
+      system "#{chroot} mkinitcpio -p linux"
+  end
 end
 
 def chrootOptionsMenu()

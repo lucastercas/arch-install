@@ -12,43 +12,23 @@ end
 
 def installPackages(file)
   packages = getPackagesFromFile("./src/pkgs/#{file}")
-  cmd = "arch-chroot /mnt pacman -S #{packages}"
+  cmd = "arch-chroot /mnt pacman -S --noconfirm #{packages}"
   puts "--> #{cmd}"
   system(cmd)
 end
 
 def installPackagesMenu(chrootl)
+  puts "\n=== Install Packages Menu ==="
   while true do
-    puts "1 - Base"
-    puts "2 - Graphical"
-    puts "3 - File Manager"
-    puts "4 - Audio"
-    puts "5 - Development"
-    puts "6 - Fonts"
-    puts "7 - Bluetooth"
-    puts "8 - Docker"
-    puts "9 - Languages"
+    puts "1 - Simple"
+    puts "2 - Default"
     puts "0 - Back"
     option = gets.chomp.to_i
     case option
       when 1
-        installPackages("base.pkg")
+        installPackages("simple.txt")
       when 2
-        installPackages("graphical.pkg")
-      when 3
-        installPackages("file-manager.pkg")
-      when 4
-        installPackages("audio.pkg")
-      when 5
-        installPackages("development.pkg")
-      when 6
-        installPackages("fonts.pkg")
-      when 7
-        installPackages("bluetooth.pkg")
-      when 8
-        installPackages("docker.pkg")
-      when 9
-        installPackages("languages.pkg")
+        installPackages("default.txt")
       when 0
         break
     end
