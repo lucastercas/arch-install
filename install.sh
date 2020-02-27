@@ -74,6 +74,9 @@ printf "\n===== Configuring Disks =====\n"
 partition_config="./partitions.csv"
 echo "Which disk to configure?"
 read disk
+clear_partition="sgdisk --clear $disk"
+echo "$clear_partition"
+eval "$clear_partition"
 start_disk_setup $partition_config $disk
 
 printf "\n====== Configuring Pacstrap =====\n"
