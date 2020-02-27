@@ -11,9 +11,9 @@ start_disk_setup() {
     if [ "$i" != 0 ]; then
       printf "\n--- Setting up Partition $f1 ---\n"
       create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
-      format_partition "${$2}${f1}" "$f5"
+      format_partition "${2}${f1}" "$f5"
       if [ "$f6" != "" ]; then
-        mount_partition "${$2}${f1}" "/mnt${f6}"
+        mount_partition "${2}${f1}" "/mnt${f6}"
       fi
       # echo "$f1 $f2 $f3 $f4 $f5 $f6"
     fi
