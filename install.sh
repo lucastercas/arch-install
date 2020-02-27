@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # $1 Path to CSV file
 start_disk_setup() {
   i=0
@@ -28,7 +30,7 @@ start_disk_setup() {
 create_partition() {
   cmd="sgdisk -n $1:$3:$4 -c $1:$2 -t $1:$5 $6"
   echo "--> $cmd"
-  # eval $cmd
+  eval $cmd
 }
 
 # $1 - Partition path
@@ -42,9 +44,12 @@ format_partition() {
     cmd2="swapon $1"
     echo "--> $cmd1"
     echo "--> $cmd2"
+    eval $cmd1
+    eval $cmd2
   elif [ "$2" == "8300" ] || [ "$2" == "8302" ]; then
     cmd="mkfs.ext4 $1"
     echo "--> $cmd"
+    eval $cmd
   fi
 }
 
@@ -55,6 +60,8 @@ mount_partition() {
   cmd="mount $1 $2"
   echo "--> $mkdir_cmd"
   echo "--> $cmd"
+  eval $mkdir_cmd
+  eval $cmd
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -65,10 +72,10 @@ echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n===== Configuring Disks =====\n"
 partition_config="./partitions.csv"
-parse_csv $partition_config
+start_disk_setup $partition_config
 
 printf "\n====== Configuring Pacstrap =====\n"
-pacstrap -t /mnt base base-devel linux linux-headers linux-firmware vim git
+pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git
 
 printf "\n====== Configuring fstab =====\n"
 genfstab -U /mnt >> /mnt/etc/fstab
