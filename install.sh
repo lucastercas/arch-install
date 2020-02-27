@@ -28,7 +28,7 @@ start_disk_setup() {
 # $5 - Type of partition
 # $6 - Disk to create partition
 create_partition() {
-  cmd="sgdisk -n $1:$3:$4 -c $1:$2 -t $1:$5 $6"
+  cmd="sgdisk -n $1:$3:$4 -c $1:\"$2\" -t $1:$5 $6"
   echo "--> $cmd"
   eval $cmd
 }
