@@ -3,17 +3,17 @@
 set -e
 
 # $1 Path to CSV file
+# $2 disk
 start_disk_setup() {
   i=0
-  disk="/dev/sda"
   while IFS=',' read -r f1 f2 f3 f4 f5 f6
   do
     if [ "$i" != 0 ]; then
       printf "\n--- Setting up Partition $f1 ---\n"
       create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
-      format_partition "${disk}${f1}" "$f5"
+      format_partition "${$2}${f1}" "$f5"
       if [ "$f6" != "" ]; then
-        mount_partition "${disk}${f1}" "/mnt${f6}"
+        mount_partition "${$2}${f1}" "/mnt${f6}"
       fi
       # echo "$f1 $f2 $f3 $f4 $f5 $f6"
     fi
@@ -72,7 +72,9 @@ echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n===== Configuring Disks =====\n"
 partition_config="./partitions.csv"
-start_disk_setup $partition_config
+echo "Which disk to configure?"
+read disk
+start_disk_setup $partition_config $disk
 
 printf "\n====== Configuring Pacstrap =====\n"
 pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git
