@@ -93,12 +93,13 @@ echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n##### DISK #####\n"
-partition_config="./partitions.csv"
-echo "Which disk to configure?"
-read disk
+
+read -p "Which disk to configure?" disk;
+
 clear_partition="sgdisk --clear $disk"
-echo "$clear_partition"
-eval "$clear_partition"
+echo "==> $clear_partition"; eval "$clear_partition"
+
+partition_config="./partitions.csv"
 start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
@@ -132,4 +133,27 @@ packages=""
 while IFS= read -r line; do
   packages="${packages} ${line}"
 done < "$packages_file"
-arch-chroot /mnt pacman -S --noconfirm $packages
+cmd="arch-chroot /mnt pacman -S --noconfirm $packages"
+echo "==> $cmd"; eval "$cmd"
+
+printf "\n##### USER #####\n"
+read -p "Username: " username
+read -p "Complete Name: " complete_name
+arch-chroot /mnt adduser -m -G wheel -s /bin/zsh -c "$complete_name" "$username"
+arch-chroot /mnt passwd "$username"
+
+printf "\n##### ROOT #####\n"
+arch-chroot /mnt passwd
+
+printf "\n##### HOSTNAME #####\n"
+read -p "Hostname: " hostname
+cmd="arch-chroot /mnt echo "$hostname" >> /etc/hostname"
+echo "==> $cmd"; eval "$cmd"
+
+printf "\n##### GRUB BOOTLOADER #####\n"
+arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+printf "\n##### SERVICES #####\n"
+cmd="arch-chroot /mnt systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"
+echo "==> $cmd"; eval "$cmd"
