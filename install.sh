@@ -96,7 +96,7 @@ echo "  / _ \ | '__/ __| '_ \   | || '_ \/ __| __/ _\` | | |"
 echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
-printf "\n===== Configuring Disks =====\n"
+printf "\n##### DISK #####\n"
 partition_config="./partitions.csv"
 echo "Which disk to configure?"
 read disk
@@ -107,8 +107,26 @@ start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
 
-printf "\n====== Configuring Pacstrap =====\n"
-pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git
+printf "\n##### PACSTRAP #####\n"
+cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git"
+echo $cmd; eval $cmd
 
-printf "\n====== Configuring fstab =====\n"
-genfstab -U /mnt >> /mnt/etc/fstab
+printf "\n##### FSTAB #####\n"
+cmd="genfstab -U /mnt >> /mnt/etc/fstab"
+echo $cmd; eval $cmd
+
+printf "\n##### LOCALE #####\n"
+arch-chroot /mnt "ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime"
+arch-chroot /mnt "sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen"
+arch-chroot /mnt "locale-gen"
+arch-chroot /mnt "hwclock --systohc"
+arch-chroot /mnt "echo LANG=pt_BR.UTF-8 >> /etc/locale.conf"
+
+printf "\n##### PACKAGES #####\n"
+packages_file="./packages.txt"
+packages=""
+while IFS= read -r line; do
+  if [ $line ]
+  packages="${packages} ${line}"
+done < "$packages_file"
+arch-chroot /mnt "pacman -S $packages"
