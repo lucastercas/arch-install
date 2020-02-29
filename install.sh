@@ -104,7 +104,9 @@ start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
 
-curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > test.txt
+printf "\n##### MIRRORS #####\n"
+cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > test.txt"
+echo "==> $cmd"; eval $cmd
 
 printf "\n##### PACSTRAP #####\n"
 cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git pacman-contrib curl"
