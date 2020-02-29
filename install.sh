@@ -104,10 +104,6 @@ start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
 
-printf "\n##### MIRRORS #####\n"
-cat ./files/mirrorlist | arch-chroot /mnt Server = http://archlinux.c3sl.ufpr.br/$repo/os/$arch > /etc/pacman.d/mirrorlist
-cat ./files/mirrorlist | arch-chroot /mnt Server = http://br.mirror.archlinux-br.org/$repo/os/$arch >> /etc/pacman.d/mirrorlist
-arch-chroot /mnt pacman -Syyu
 
 printf "\n##### PACSTRAP #####\n"
 cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git"
@@ -123,6 +119,11 @@ arch-chroot /mnt sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen
 arch-chroot /mnt locale-gen
 arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+
+printf "\n##### MIRRORS #####\n"
+cat ./files/mirrorlist | arch-chroot /mnt Server = http://archlinux.c3sl.ufpr.br/$repo/os/$arch > /etc/pacman.d/mirrorlist
+cat ./files/mirrorlist | arch-chroot /mnt Server = http://br.mirror.archlinux-br.org/$repo/os/$arch >> /etc/pacman.d/mirrorlist
+arch-chroot /mnt pacman -Syyu
 
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
