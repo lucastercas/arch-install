@@ -109,7 +109,7 @@ cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&pro
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### PACSTRAP #####\n"
-cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git pacman-contrib curl"
+cmd="pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### FSTAB #####\n"

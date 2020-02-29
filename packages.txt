@@ -6,6 +6,7 @@ os-prober
 mtools
 linux
 linux-headers
+linux-firmware
 refind-efi
 dialog
 xterm
