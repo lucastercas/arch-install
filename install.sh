@@ -4,17 +4,13 @@ set -e
 
 # $1 Path to CSV file
 # $2 disk
-start_disk_setup() {
+start_create_partition() {
   i=0
   while IFS=',' read -r f1 f2 f3 f4 f5 f6
   do
     if [ "$i" != 0 ]; then
       printf "\n--- Setting up Partition $f1 ---\n"
       create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
-      format_partition "${2}${f1}" "$f5"
-      if [ "$f6" != "" ]; then
-        mount_partition "${2}${f1}" "/mnt${f6}"
-      fi
       # echo "$f1 $f2 $f3 $f4 $f5 $f6"
     fi
     let "i+=1"
@@ -31,6 +27,20 @@ create_partition() {
   cmd="sgdisk -n $1:$3:$4 -c $1:\"$2\" -t $1:$5 $6"
   echo "--> $cmd"
   eval $cmd
+}
+
+# $1 Path to CSV file
+# $2 disk
+start_format_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Formating Partition $f1 ---\n"
+      format_partition "${2}${f1}" "$f5"
+    fi
+    let "i+=1"
+  done < "$1"
 }
 
 # $1 - Partition path
@@ -51,6 +61,22 @@ format_partition() {
     echo "--> $cmd"
     eval $cmd
   fi
+}
+
+# $1 Path to CSV file
+# $2 disk
+start_mount_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Mount Partition $f1 ---\n"
+      if [ "$f6" != "" ]; then
+        mount_partition "${2}${f1}" "/mnt${f6}"
+      fi
+    fi
+    let "i+=1"
+  done < "$1"
 }
 
 # $1 - Path to disk
@@ -77,7 +103,9 @@ read disk
 clear_partition="sgdisk --clear $disk"
 echo "$clear_partition"
 eval "$clear_partition"
-start_disk_setup $partition_config $disk
+start_create_partition $partition_config $disk
+start_format_partition $partition_config $disk
+start_mount_partition $partition_config $disk
 
 printf "\n====== Configuring Pacstrap =====\n"
 pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git
