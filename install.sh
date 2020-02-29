@@ -81,10 +81,9 @@ start_mount_partition() {
 # $2 - Path to mount
 mount_partition() {
   mkdir_cmd="mkdir -p $2"
+  echo "==> $mkdir_cmd"; eval "$mkdir_cmd"
   cmd="mount $1 $2"
-  echo "--> $mkdir_cmd"
-  eval $mkdir_cmd
-  echo "==> $cmd"; eval $cmd
+  echo "==> $cmd"; eval "$cmd"
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -105,7 +104,8 @@ start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
 
 printf "\n##### MIRRORS #####\n"
-cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > test.txt"
+pacman -S pacman-contrib
+cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### PACSTRAP #####\n"
@@ -124,7 +124,7 @@ arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 printf "\n##### MIRRORS #####\n"
-arch-chroot /mnt curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > test.txt
+arch-chroot /mnt curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
