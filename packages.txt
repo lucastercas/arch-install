@@ -73,7 +73,7 @@ xorg-server
 xorg-xinit
 xorg-xrandr
 xorg-drivers
-xorg-app
+xorg-apps
 xorg-xbacklight
 xorg-server-xephyr
 xorg-xmessage
