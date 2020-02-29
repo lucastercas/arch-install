@@ -25,8 +25,7 @@ start_create_partition() {
 # $6 - Disk to create partition
 create_partition() {
   cmd="sgdisk -n $1:$3:$4 -c $1:\"$2\" -t $1:$5 $6"
-  echo "--> $cmd"
-  eval $cmd
+  echo "==> $cmd"; eval $cmd
 }
 
 # $1 Path to CSV file
@@ -58,8 +57,7 @@ format_partition() {
     eval $cmd2
   elif [ "$2" == "8300" ] || [ "$2" == "8302" ]; then
     cmd="mkfs.ext4 $1"
-    echo "--> $cmd"
-    eval $cmd
+    echo "==> $cmd"; eval $cmd
   fi
 }
 
@@ -85,9 +83,8 @@ mount_partition() {
   mkdir_cmd="mkdir -p $2"
   cmd="mount $1 $2"
   echo "--> $mkdir_cmd"
-  echo "--> $cmd"
   eval $mkdir_cmd
-  eval $cmd
+  echo "==> $cmd"; eval $cmd
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -109,14 +106,14 @@ start_mount_partition $partition_config $disk
 
 printf "\n##### PACSTRAP #####\n"
 cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git"
-echo $cmd; eval $cmd
+echo "==> $cmd"; eval $cmd
 
 printf "\n##### FSTAB #####\n"
 cmd="genfstab -U /mnt >> /mnt/etc/fstab"
-echo $cmd; eval $cmd
+echo "==> $cmd"; eval $cmd
 
 printf "\n##### LOCALE #####\n"
-arch-chroot /mnt "ln -sf /usr/share/zoneinfo/America/Fortaleza /etc/localtime"
+arch-chroot /mnt "ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime"
 arch-chroot /mnt "sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen"
 arch-chroot /mnt "locale-gen"
 arch-chroot /mnt "hwclock --systohc"
