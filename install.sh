@@ -119,11 +119,15 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
+printf "\n##### MIRRORS #####\n"
+cat ./files/mirrorlist | arch-chroot /mnt Server = http://archlinux.c3sl.ufpr.br/$repo/os/$arch > /etc/pacman.d/mirrorlist
+cat ./files/mirrorlist | arch-chroot /mnt Server = http://br.mirror.archlinux-br.org/$repo/os/$arch >> /etc/pacman.d/mirrorlist
+arch-chroot /mnt pacman -Syyu
+
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
 packages=""
 while IFS= read -r line; do
-  if [ $line ]
   packages="${packages} ${line}"
 done < "$packages_file"
 arch-chroot /mnt pacman -S --noconfirm $packages
