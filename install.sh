@@ -113,11 +113,11 @@ cmd="genfstab -U /mnt >> /mnt/etc/fstab"
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### LOCALE #####\n"
-arch-chroot /mnt "ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime"
-arch-chroot /mnt "sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen"
-arch-chroot /mnt "locale-gen"
-arch-chroot /mnt "hwclock --systohc"
-arch-chroot /mnt "echo LANG=pt_BR.UTF-8 >> /etc/locale.conf"
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime
+arch-chroot /mnt sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen
+arch-chroot /mnt locale-gen
+arch-chroot /mnt hwclock --systohc
+arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
@@ -126,4 +126,4 @@ while IFS= read -r line; do
   if [ $line ]
   packages="${packages} ${line}"
 done < "$packages_file"
-arch-chroot /mnt "pacman -S $packages"
+arch-chroot /mnt pacman -S --noconfirm $packages
