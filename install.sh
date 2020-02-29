@@ -104,9 +104,10 @@ start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
 start_mount_partition $partition_config $disk
 
+curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > test.txt
 
 printf "\n##### PACSTRAP #####\n"
-cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git"
+cmd="pacstrap -i /mnt base base-devel linux linux-headers linux-firmware vim git pacman-contrib"
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### FSTAB #####\n"
@@ -121,9 +122,7 @@ arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 printf "\n##### MIRRORS #####\n"
-cat ./files/mirrorlist | arch-chroot /mnt Server = http://archlinux.c3sl.ufpr.br/$repo/os/$arch > /etc/pacman.d/mirrorlist
-cat ./files/mirrorlist | arch-chroot /mnt Server = http://br.mirror.archlinux-br.org/$repo/os/$arch >> /etc/pacman.d/mirrorlist
-arch-chroot /mnt pacman -Syyu
+
 
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
