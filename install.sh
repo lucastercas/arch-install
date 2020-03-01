@@ -106,6 +106,9 @@ printf "\n##### MIRRORS #####\n"
 pacman -S pacman-contrib
 cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
 echo "==> $cmd"; eval $cmd
+pacman-key --init
+pacman-key --populate archlinux
+pacman -Sy
 
 printf "\n##### PACSTRAP #####\n"
 cmd="pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
@@ -124,6 +127,9 @@ arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 printf "\n##### MIRRORS #####\n"
 arch-chroot /mnt curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+arch-chroot /mnt pacman-key --init
+arch-chroot /mnt pacman-key --populate archlinux
+arch-chroot /mnt pacman -Sy
 
 printf "\n##### PACKAGES #####\n"
 packages_file="./packages.txt"
