@@ -47,14 +47,12 @@ start_format_partition() {
 format_partition() {
   if [ "$2" == "ef00" ]; then
     cmd="mkfs.vfat -F32 $1"
-    echo "--> $cmd"
+    echo "==> $cmd"; eval "$cmd"
   elif [ "$2" == "8200" ]; then # Swap
     cmd1="mkswap $1"
+    echo "==> $cmd1"; eval $cmd1
     cmd2="swapon $1"
-    echo "--> $cmd1"
-    echo "--> $cmd2"
-    eval $cmd1
-    eval $cmd2
+    echo "==> $cmd2"; eval $cmd2
   elif [ "$2" == "8300" ] || [ "$2" == "8302" ]; then
     cmd="mkfs.ext4 $1"
     echo "==> $cmd"; eval $cmd
@@ -94,9 +92,9 @@ echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n##### DISK #####\n"
 
-read -p "Which disk to configure?" disk;
+read -p "Which disk to configure? " disk;
 
-clear_partition="sgdisk --clear $disk"
+clear_partition="sgdisk -og $disk"
 echo "==> $clear_partition"; eval "$clear_partition"
 
 partition_config="./partitions.csv"
@@ -136,6 +134,9 @@ done < "$packages_file"
 cmd="arch-chroot /mnt pacman -S --noconfirm $packages"
 echo "==> $cmd"; eval "$cmd"
 
+printf "\n##### MKINITCPIO #####\n"
+arch-chroot /mnt mkinitcpio -p linux
+
 printf "\n##### USER #####\n"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
@@ -151,7 +152,7 @@ cmd="arch-chroot /mnt echo "$hostname" >> /etc/hostname"
 echo "==> $cmd"; eval "$cmd"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 printf "\n##### SERVICES #####\n"
