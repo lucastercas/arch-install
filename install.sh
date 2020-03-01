@@ -139,7 +139,7 @@ echo "==> $cmd"; eval "$cmd"
 printf "\n##### USER #####\n"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
-arch-chroot /mnt adduser -m -G wheel -s /bin/zsh -c "$complete_name" "$username"
+arch-chroot /mnt useradd -m -G wheel -s /bin/zsh -c "$complete_name" "$username"
 arch-chroot /mnt passwd "$username"
 
 printf "\n##### ROOT #####\n"
@@ -151,7 +151,7 @@ cmd="arch-chroot /mnt echo "$hostname" >> /etc/hostname"
 echo "==> $cmd"; eval "$cmd"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 printf "\n##### SERVICES #####\n"
