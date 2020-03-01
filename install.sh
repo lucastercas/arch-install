@@ -152,7 +152,7 @@ cmd="arch-chroot /mnt echo "$hostname" >> /etc/hostname"
 echo "==> $cmd"; eval "$cmd"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 printf "\n##### SERVICES #####\n"
