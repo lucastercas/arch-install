@@ -120,3 +120,4 @@ xfsprogs
 nilfs-utils
 gvfs-google
 gvfs-goa
+android-file-transfer
