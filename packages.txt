@@ -121,3 +121,11 @@ nilfs-utils
 gvfs-google
 gvfs-goa
 android-file-transfer
+mtpfs
+brtfs-progs
+jfutils
+deluge
+gtk-engines
+dhcpcd
+android-udev
+android-tools
