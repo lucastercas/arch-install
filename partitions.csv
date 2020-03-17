@@ -1,5 +1,5 @@
 num,name,start,end,code,mount_point
-2,root,514MiB,+8GiB,8300,/
-1,efi,34,+512MiB,ef00,/efi/
-3,home,0,+8GiB,8302,/home/
+2,root,514MiB,+70GiB,8300,/
+1,efi,34,+256MiB,ef00,/efi/
+3,home,0,+40GiB,8302,/home/
 4,swap,0,0,8200,
