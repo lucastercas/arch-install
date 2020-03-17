@@ -102,12 +102,9 @@ echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n##### DISK #####\n"
-
 read -p "Which disk to configure? " disk;
-
 clear_partition="sgdisk -og $disk"
 echo "==> $clear_partition"; eval "$clear_partition"
-
 partition_config="./partitions.csv"
 start_create_partition $partition_config $disk
 start_format_partition $partition_config $disk
@@ -131,15 +128,15 @@ cmd="genfstab -U /mnt >> /mnt/etc/fstab"
 echo "==> $cmd"; eval $cmd
 
 printf "\n##### LOCALE #####\n"
-arch-chroot /mnt ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime
-arch-chroot /mnt sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen
-arch-chroot /mnt locale-gen
-arch-chroot /mnt hwclock --systohc
-arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+execute_cmd "ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime"
+execute_cmd "sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen"
+execute_cmd "locale-gen"
+execute_cmd "hwclock --systohc"
+execute_cmd "echo LANG=pt_BR.UTF-8 >> /etc/locale.conf"
 
 printf "\n##### MIRRORS #####\n"
 # Update mirrors, so the next package installs are easiers
-execute_cmd "curl -s \"https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on\" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
+execute_cmd "curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
 # Update pacman
 execute_cmd "pacman-key --init"
 execute_cmd "pacman-key --populate archlinux"
@@ -166,12 +163,12 @@ execute_cmd "passwd"
 
 printf "\n##### HOSTNAME #####\n"
 read -p "Hostname: " hostname
-execute_cmd="echo $hostname >> /etc/hostname"
+execute_cmd "echo $hostname >> /etc/hostname"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-execute_cmd="grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
-execute_cmd="grub-mkconfig -o /boot/grub/grub.cfg"
+execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
 # Enable system services
 printf "\n##### SERVICES #####\n"
-execute_cmd="systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"
+execute_cmd "systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"
