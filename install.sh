@@ -2,21 +2,6 @@
 
 set -e
 
-# $1 Path to CSV file
-# $2 disk
-start_create_partition() {
-  i=0
-  while IFS=',' read -r f1 f2 f3 f4 f5 f6
-  do
-    if [ "$i" != 0 ]; then
-      printf "\n--- Setting up Partition $f1 ---\n"
-      create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
-      # echo "$f1 $f2 $f3 $f4 $f5 $f6"
-    fi
-    let "i+=1"
-  done < "$1"
-}
-
 # $1 - Number of partition
 # $2 - Name of partition
 # $3 - Start of partition
@@ -30,13 +15,14 @@ create_partition() {
 
 # $1 Path to CSV file
 # $2 disk
-start_format_partition() {
+start_create_partition() {
   i=0
   while IFS=',' read -r f1 f2 f3 f4 f5 f6
   do
     if [ "$i" != 0 ]; then
-      printf "\n--- Formating Partition $f1 ---\n"
-      format_partition "${2}${f1}" "$f5"
+      printf "\n--- Setting up Partition $f1 ---\n"
+      create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
+      # echo "$f1 $f2 $f3 $f4 $f5 $f6"
     fi
     let "i+=1"
   done < "$1"
@@ -61,6 +47,27 @@ format_partition() {
 
 # $1 Path to CSV file
 # $2 disk
+start_format_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Formating Partition $f1 ---\n"
+      format_partition "${2}${f1}" "$f5"
+    fi
+    let "i+=1"
+  done < "$1"
+}
+
+# $1 - Path to disk
+# $2 - Path to mount
+mount_partition() {
+  execute_cmd "mkdir -p $2"
+  execute_cmd "mount $1 $2"
+}
+
+# $1 Path to CSV file
+# $2 disk
 start_mount_partition() {
   i=0
   while IFS=',' read -r f1 f2 f3 f4 f5 f6
@@ -75,13 +82,17 @@ start_mount_partition() {
   done < "$1"
 }
 
-# $1 - Path to disk
-# $2 - Path to mount
-mount_partition() {
-  mkdir_cmd="mkdir -p $2"
-  echo "==> $mkdir_cmd"; eval "$mkdir_cmd"
-  cmd="mount $1 $2"
-  echo "==> $cmd"; eval "$cmd"
+execute_cmd() {
+  echo "==> $1"
+  eval "arch-chroot /mnt $1"
+}
+
+install_packages() {
+  packages=""
+  while IFS= read -r line; do
+    packages="${packages} ${line}"
+  done < "$1"
+  execute_cmd "pacman -S --noconfirm $packages"
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -104,16 +115,17 @@ start_mount_partition $partition_config $disk
 
 printf "\n##### MIRRORS #####\n"
 pacman -S pacman-contrib
-cmd="curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
-echo "==> $cmd"; eval $cmd
+curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 pacman-key --init
 pacman-key --populate archlinux
 pacman -Sy
 
+# Install base system packages
 printf "\n##### PACSTRAP #####\n"
 cmd="pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
 echo "==> $cmd"; eval $cmd
 
+# Create fstab, file that describes how the disk is structured
 printf "\n##### FSTAB #####\n"
 cmd="genfstab -U /mnt >> /mnt/etc/fstab"
 echo "==> $cmd"; eval $cmd
@@ -126,41 +138,40 @@ arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 printf "\n##### MIRRORS #####\n"
-arch-chroot /mnt curl -s "https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
-arch-chroot /mnt pacman-key --init
-arch-chroot /mnt pacman-key --populate archlinux
-arch-chroot /mnt pacman -Sy
+# Update mirrors, so the next package installs are easiers
+execute_cmd "curl -s \"https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on\" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
+# Update pacman
+execute_cmd "pacman-key --init"
+execute_cmd "pacman-key --populate archlinux"
+execute_cmd "pacman -Sy"
 
+# Install packages
 printf "\n##### PACKAGES #####\n"
-packages_file="./packages.txt"
-packages=""
-while IFS= read -r line; do
-  packages="${packages} ${line}"
-done < "$packages_file"
-cmd="arch-chroot /mnt pacman -S --noconfirm $packages"
-echo "==> $cmd"; eval "$cmd"
+terminal_pkgs_file="./packages/terminal.txt"
+graphical_pkgs_file="./packages/graphical.txt"
+install_packages "$terminal_pkgs_file"
+install_packages "$graphical_pkgs_file"
 
 printf "\n##### MKINITCPIO #####\n"
-arch-chroot /mnt mkinitcpio -p linux
+execute_cmd "/mnt mkinitcpio -p linux"
 
 printf "\n##### USER #####\n"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
-arch-chroot /mnt useradd -m -G wheel -s /bin/zsh -c "$complete_name" "$username"
-arch-chroot /mnt passwd "$username"
+execute_cmd "useradd -m -G wheel -s /bin/zsh -c $complete_name $username"
+execute_cmd "/mnt passwd $username"
 
 printf "\n##### ROOT #####\n"
-arch-chroot /mnt passwd
+execute_cmd "passwd"
 
 printf "\n##### HOSTNAME #####\n"
 read -p "Hostname: " hostname
-cmd="arch-chroot /mnt echo "$hostname" >> /etc/hostname"
-echo "==> $cmd"; eval "$cmd"
+execute_cmd="echo $hostname >> /etc/hostname"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+execute_cmd="grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+execute_cmd="grub-mkconfig -o /boot/grub/grub.cfg"
 
+# Enable system services
 printf "\n##### SERVICES #####\n"
-cmd="arch-chroot /mnt systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"
-echo "==> $cmd"; eval "$cmd"
+execute_cmd="systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"

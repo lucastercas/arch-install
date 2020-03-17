@@ -1,0 +1,13 @@
+redshift-gtk-git
+spotify
+altair
+dropbox
+gitkraken
+google-chrome
+mongodb-compass
+obinskit
+polybar
+postman
+php-gtk-theme
+ttf-unifont
+spaceship-prompt
