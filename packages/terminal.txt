@@ -85,8 +85,6 @@ gvfs-google
 gvfs-goa
 android-file-transfer
 mtpfs
-brtfs-progs
-jfutils
 dhcpcd
 android-udev
 android-tools

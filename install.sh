@@ -62,8 +62,8 @@ start_format_partition() {
 # $1 - Path to disk
 # $2 - Path to mount
 mount_partition() {
-  execute_cmd "mkdir -p $2"
-  execute_cmd "mount $1 $2"
+  mkdir -p $2
+  mount $1 $2
 }
 
 # $1 Path to CSV file
@@ -156,7 +156,8 @@ printf "\n##### USER #####\n"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
 execute_cmd "useradd -m -G wheel -s /bin/zsh -c $complete_name $username"
-execute_cmd "/mnt passwd $username"
+execute_cmd "passwd $username"
+execute_cmd "visudo"
 
 printf "\n##### ROOT #####\n"
 execute_cmd "passwd"
