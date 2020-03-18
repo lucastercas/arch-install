@@ -12,9 +12,11 @@ done < "$aur_pkgs_file"
 cmd="yay -S $packages"
 echo "==> $cmd"; eval "$cmd"
 
-
 # Oh My ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Spaceship Prompt
 ZSH_CUSTOM="$HOME/.oh-my-zsh"
