@@ -157,7 +157,7 @@ read -p "Username: " username
 read -p "Complete Name: " complete_name
 execute_cmd "useradd -m -G wheel -s /bin/zsh -c $complete_name $username"
 execute_cmd "passwd $username"
-execute_cmd "visudo"
+execute_cmd "visudo" # Add wheel group permission, for sudo
 
 printf "\n##### ROOT #####\n"
 execute_cmd "passwd"
