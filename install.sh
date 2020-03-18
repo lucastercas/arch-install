@@ -151,7 +151,7 @@ install_packages "$terminal_pkgs_file"
 install_packages "$graphical_pkgs_file"
 
 printf "\n##### MKINITCPIO #####\n"
-execute_cmd "/mnt mkinitcpio -p linux"
+execute_cmd "mkinitcpio -p linux"
 
 printf "\n##### USER #####\n"
 read -p "Username: " username
@@ -168,7 +168,8 @@ read -p "Hostname: " hostname
 execute_cmd "echo $hostname >> /etc/hostname"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
-execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+# execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+execute_cmd "grub-install --target=i386-pc $disk"
 execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
 # Enable system services
