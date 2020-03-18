@@ -39,3 +39,4 @@ vlc
 gtk-engines
 deluge
 xscreensaver
+telegram-desktop
