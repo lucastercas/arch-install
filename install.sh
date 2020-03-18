@@ -102,6 +102,7 @@ echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n##### DISK #####\n"
+lsblk
 read -p "Which disk to configure? " disk;
 clear_partition="sgdisk -og $disk"
 echo "==> $clear_partition"; eval "$clear_partition"
