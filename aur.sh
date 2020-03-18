@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 printf "\n##### YAY #####\n"
-https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz | tar xzv
-(cd yay && makepgk -si)
+curl https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz | tar xzv
+(cd yay && makepkg -si)
 
 aur_pkgs_file="./packages/aur.txt"
 packages=""

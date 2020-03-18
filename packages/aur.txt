@@ -8,6 +8,6 @@ mongodb-compass
 obinskit
 polybar
 postman
-php-gtk-theme
+pop-gtk-theme
 ttf-unifont
-spaceship-prompt
+spaceship-prompt-git

@@ -156,7 +156,7 @@ execute_cmd "mkinitcpio -p linux"
 printf "\n##### USER #####\n"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
-execute_cmd "useradd -m -G wheel -s /bin/zsh -c $complete_name $username"
+execute_cmd "useradd -m -G wheel -s /bin/zsh -c \"$complete_name\" $username"
 execute_cmd "passwd $username"
 execute_cmd "visudo" # Add wheel group permission, for sudo
 
