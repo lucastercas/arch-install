@@ -102,6 +102,7 @@ echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
 printf "\n##### DISK #####\n"
+lsblk
 read -p "Which disk to configure? " disk;
 clear_partition="sgdisk -og $disk"
 echo "==> $clear_partition"; eval "$clear_partition"
@@ -157,7 +158,7 @@ read -p "Username: " username
 read -p "Complete Name: " complete_name
 execute_cmd "useradd -m -G wheel -s /bin/zsh -c $complete_name $username"
 execute_cmd "passwd $username"
-execute_cmd "visudo"
+execute_cmd "visudo" # Add wheel group permission, for sudo
 
 printf "\n##### ROOT #####\n"
 execute_cmd "passwd"
