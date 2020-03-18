@@ -2,7 +2,7 @@
 
 printf "\n##### YAY #####\n"
 https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz | tar xzv
-(cd yay & makepgk -si)
+(cd yay && makepgk -si)
 
 aur_pkgs_file="./packages/aur.txt"
 packages=""
