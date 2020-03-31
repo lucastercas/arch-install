@@ -169,9 +169,16 @@ execute_cmd "echo $hostname >> /etc/hostname"
 
 printf "\n##### GRUB BOOTLOADER #####\n"
 # execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
-execute_cmd "grub-install --target=i386-pc $disk"
-execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
+# execute_cmd "grub-install --target=i386-pc $disk"
+# execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
+execute_cmd "refind-install"
 
 # Enable system services
 printf "\n##### SERVICES #####\n"
-execute_cmd "systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service"
+execute_cmd "systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service lightdm.service"
+
+execute_cmd "runuser -l lucastercas -c mkdir workspace"
+execute_cmd "runuser -l lucastercas -c git clone https://github.com/lucastercas/arch-install workspace/arch-install"
+execute_cmd "runuser -l lucastercas -c ~/workspace/arch-install/aur.sh"
+execute_cmd "runuser -l lucastercas -c git clone --bare https://github.com/lucastercas/dotfiles ~/.cfg"
+execute_cmd "runuser -l lucastercas -c /usr/bin/git --git-dir=./.cfg --work-tree=./ checkout"
