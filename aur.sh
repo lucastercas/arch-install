@@ -30,5 +30,4 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 rm "$HOME/.zshrc"
 rm "$HOME/.bashrc"
 git clone --bare https://github.com/lucastercas/dotfiles "$HOME/.cfg"
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-config checkout
+/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
