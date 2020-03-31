@@ -179,4 +179,4 @@ execute_cmd "systemctl enable NetworkManager.service ntpd.service ntpdate.servic
 
 execute_cmd "runuser -l lucastercas -c 'mkdir -p workspace'"
 execute_cmd "runuser -l lucastercas -c 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'"
-execute_cmd "runuser -l lucastercas -c './workspace/arch-install/aur.sh'"
+execute_cmd "runuser -l lucastercas -c './workspace/arch-install/misc.sh'"
