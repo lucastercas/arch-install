@@ -4,7 +4,7 @@ printf "\n##### YAY #####\n"
 curl https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz | tar xzv
 (cd yay && makepkg -si)
 
-aur_pkgs_file="./packages/aur.txt"
+aur_pkgs_file="$HOME/workspace/arch-install/packages/aur.txt"
 packages=""
 while IFS= read -r line; do
   packages="${packages} ${line}"
