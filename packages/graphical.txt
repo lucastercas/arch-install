@@ -40,3 +40,7 @@ gtk-engines
 deluge
 xscreensaver
 telegram-desktop
+nvidia
+nvidia-settings
+xorg-settings-devel
+opencl-nvidia
