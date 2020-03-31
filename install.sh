@@ -173,6 +173,11 @@ printf "\n##### GRUB BOOTLOADER #####\n"
 # execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 execute_cmd "refind-install"
 
+# Files
+cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/
+cp -f ./files/hosts /mnt/etc/
+cp -f ./files/lightdm.conf /mnt/etc/lightdm/
+
 # Enable system services
 printf "\n##### SERVICES #####\n"
 execute_cmd "systemctl enable NetworkManager.service ntpd.service ntpdate.service paccache.service lightdm.service"
