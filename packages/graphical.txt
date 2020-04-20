@@ -44,3 +44,5 @@ nvidia
 nvidia-settings
 xorg-settings-devel
 opencl-nvidia
+virtualbox
+virtualbox-host-modules-arch

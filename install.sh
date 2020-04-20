@@ -181,7 +181,8 @@ cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 # Enable system services
 printf "\n##### SERVICES #####\n"
 execute_cmd "systemctl enable NetworkManager.service ntpd.service
-ntpdate.service paccache.service lightdm.service docker.service"
+ntpdate.service paccache.service lightdm.service docker.service
+bluetooth.service"
 
 execute_cmd "runuser -l lucastercas -c 'mkdir -p workspace'"
 execute_cmd "runuser -l lucastercas -c 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'"

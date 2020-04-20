@@ -88,3 +88,5 @@ mtpfs
 dhcpcd
 android-udev
 android-tools
+pandoc
+dnsutils
