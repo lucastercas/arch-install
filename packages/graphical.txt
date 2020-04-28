@@ -38,6 +38,7 @@ pcmanfm-gtk3
 vlc
 gtk-engines
 deluge
+deluge-gtk
 xscreensaver
 telegram-desktop
 nvidia
@@ -46,3 +47,4 @@ xorg-settings-devel
 opencl-nvidia
 virtualbox
 virtualbox-host-modules-arch
+virtualbox-guest-iso

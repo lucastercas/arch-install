@@ -187,3 +187,6 @@ bluetooth.service"
 execute_cmd "runuser -l lucastercas -c 'mkdir -p workspace'"
 execute_cmd "runuser -l lucastercas -c 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'"
 execute_cmd "runuser -l lucastercas -c './workspace/arch-install/misc.sh'"
+
+# echo "Default env_reset,pwfeedback > visudo
+# ILoveCandy under Misc on /etc/pacman.conf
