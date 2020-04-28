@@ -5,16 +5,16 @@ set -e
 source ./disks.sh
 
 execute_cmd() {
-  echo "==> $1"
-  eval "arch-chroot /mnt $1"
+    echo "==> $1"
+    eval "arch-chroot /mnt $1"
 }
 
 install_packages() {
-  packages=""
-  while IFS= read -r line; do
-    packages="${packages} ${line}"
-  done < "$1"
-  execute_cmd "pacman -S --noconfirm $packages"
+    packages=""
+    while IFS= read -r line; do
+        packages="${packages} ${line}"
+    done < "$1"
+    execute_cmd "pacman -S --noconfirm $packages"
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -23,7 +23,8 @@ echo "  / _ \ | '__/ __| '_ \   | || '_ \/ __| __/ _\` | | |"
 echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
-# printf "\n##### DISK #####\n"
+printf "\n##### DISK #####\n"
+setup_disks
 # lsblk
 # read -p "Which disk to configure? " disk;
 # clear_partition="sgdisk -og $disk"
@@ -89,7 +90,7 @@ printf "\n##### HOSTNAME #####\n"
 read -p "Hostname: " hostname
 execute_cmd "echo $hostname >> /etc/hostname"
 
-printf "\n##### GRUB BOOTLOADER #####\n"
+printf "\n##### ,BOOTLOADER #####\n"
 # execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
 # execute_cmd "grub-install --target=i386-pc $disk"
 # execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
