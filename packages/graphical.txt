@@ -32,6 +32,7 @@ code
 mousepad
 zathura
 gparted
+gpart
 feh
 pavucontrol
 pcmanfm-gtk3
@@ -43,7 +44,6 @@ xscreensaver
 telegram-desktop
 nvidia
 nvidia-settings
-xorg-settings-devel
 opencl-nvidia
 virtualbox
 virtualbox-host-modules-arch

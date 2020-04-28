@@ -101,15 +101,15 @@ echo "  / _ \ | '__/ __| '_ \   | || '_ \/ __| __/ _\` | | |"
 echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
-printf "\n##### DISK #####\n"
-lsblk
-read -p "Which disk to configure? " disk;
-clear_partition="sgdisk -og $disk"
-echo "==> $clear_partition"; eval "$clear_partition"
-partition_config="./partitions.csv"
-start_create_partition $partition_config $disk
-start_format_partition $partition_config $disk
-start_mount_partition $partition_config $disk
+# printf "\n##### DISK #####\n"
+# lsblk
+# read -p "Which disk to configure? " disk;
+# clear_partition="sgdisk -og $disk"
+# echo "==> $clear_partition"; eval "$clear_partition"
+# partition_config="./partitions.csv"
+# start_create_partition $partition_config $disk
+# start_format_partition $partition_config $disk
+# start_mount_partition $partition_config $disk
 
 printf "\n##### MIRRORS #####\n"
 pacman -S pacman-contrib
