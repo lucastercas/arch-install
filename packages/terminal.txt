@@ -90,3 +90,4 @@ android-udev
 android-tools
 pandoc
 dnsutils
+light
