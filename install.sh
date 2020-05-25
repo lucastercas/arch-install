@@ -114,6 +114,8 @@ execute_cmd "cp -f ./files/hosts /mnt/etc/"
 execute_cmd "cp -f ./files/lightdm.conf /mnt/etc/lightdm/"
 
 echo "#--- Config files ---#"
-execute_cmd "runuser -l lucastercas -c 'mkdir -p workspace'"
-execute_cmd "runuser -l lucastercas -c 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'"
-execute_cmd "runuser -l lucastercas -c './workspace/arch-install/misc.sh'"
+execute_as_user 'mkdir -p workspace'
+execute_as_user 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'
+
+echo "#--- Misc programs ---#"
+execute_as_user './workspace/arch-install/misc.sh'
