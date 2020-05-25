@@ -2,19 +2,55 @@
 
 set -e
 
-source ./disks.sh
+source "./src/general.sh"
+source "./src/disk.sh"
+source "./src/locale.sh"
 
-execute_cmd() {
-    echo "==> $1"
-    eval "arch-chroot /mnt $1"
+# $1 Path to CSV file
+# $2 disk
+start_create_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Setting up Partition $f1 ---\n"
+      create_partition $f1 $f2 $f3 $f4 $f5 "$disk"
+      # echo "$f1 $f2 $f3 $f4 $f5 $f6"
+    fi
+    let "i+=1"
+  done < "$1"
 }
 
-install_packages() {
-    packages=""
-    while IFS= read -r line; do
-        packages="${packages} ${line}"
-    done < "$1"
-    execute_cmd "pacman -S --noconfirm $packages"
+
+# $1 Path to CSV file
+# $2 disk
+start_format_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Formating Partition $f1 ---\n"
+      format_partition "${2}${f1}" "$f5"
+    fi
+    let "i+=1"
+  done < "$1"
+}
+
+
+# $1 Path to CSV file
+# $2 disk
+start_mount_partition() {
+  i=0
+  while IFS=',' read -r f1 f2 f3 f4 f5 f6
+  do
+    if [ "$i" != 0 ]; then
+      printf "\n--- Mount Partition $f1 ---\n"
+      if [ "$f6" != "" ]; then
+        mount_partition "${2}${f1}" "/mnt${f6}"
+      fi
+    fi
+    let "i+=1"
+  done < "$1"
 }
 
 echo '    _             _       ___           _        _ _ '
@@ -23,93 +59,61 @@ echo "  / _ \ | '__/ __| '_ \   | || '_ \/ __| __/ _\` | | |"
 echo ' / ___ \| | | (__| | | |  | || | | \__ \ || (_| | | |'
 echo '/_/   \_\_|  \___|_| |_| |___|_| |_|___/\__\__,_|_|_|'
 
-printf "\n##### DISK #####\n"
-setup_disks
-# lsblk
-# read -p "Which disk to configure? " disk;
-# clear_partition="sgdisk -og $disk"
-# echo "==> $clear_partition"; eval "$clear_partition"
-# partition_config="./partitions.csv"
-# start_create_partition $partition_config $disk
-# start_format_partition $partition_config $disk
-# start_mount_partition $partition_config $disk
+echo "#===== HOST =====#"
+echo "#--- Setting disks ---#"
+lsblk
 
-printf "\n##### MIRRORS #####\n"
-pacman -S pacman-contrib
-curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Sy
+echo "#--- Settings Host Mirrors ---#"
+set_mirrors exec_cmd
 
-# Install base system packages
-printf "\n##### PACSTRAP #####\n"
-cmd="pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
-echo "==> $cmd"; eval $cmd
+echo "#--- Executing pacstrap ---#"
+exec_cmd "pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
 
-# Create fstab, file that describes how the disk is structured
-printf "\n##### FSTAB #####\n"
-cmd="genfstab -U /mnt >> /mnt/etc/fstab"
-echo "==> $cmd"; eval $cmd
+echo "#--- Generating fstab ---#"
+exec_cmd "genfstab -U /mnt >> /mnt/etc/fstab"
 
-printf "\n##### LOCALE #####\n"
-execute_cmd "ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime"
-execute_cmd "sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen"
-execute_cmd "locale-gen"
-execute_cmd "hwclock --systohc"
-execute_cmd "echo LANG=pt_BR.UTF-8 >> /etc/locale.conf"
+echo "#===== CHROOT =====#"
+echo "#--- Setting locale ---#"
+set_locale
 
-printf "\n##### MIRRORS #####\n"
-# Update mirrors, so the next package installs are easiers
-execute_cmd "curl -s 'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on' | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist"
-# Update pacman
-execute_cmd "pacman-key --init"
-execute_cmd "pacman-key --populate archlinux"
-execute_cmd "pacman -Sy"
+echo "#--- Setting mirrors ---#"
+set_mirros exec_chroot_cmd
 
-# Install packages
-printf "\n##### PACKAGES #####\n"
-terminal_pkgs_file="./packages/terminal.txt"
-graphical_pkgs_file="./packages/graphical.txt"
-install_packages "$terminal_pkgs_file"
-install_packages "$graphical_pkgs_file"
+echo "#--- Installing packages ---#"
+install_packages "./packages/terminal.txt"
+install_packages "./packages/graphical.txt"
 
-printf "\n##### MKINITCPIO #####\n"
-execute_cmd "mkinitcpio -p linux"
+echo "#--- Generating mkinitcpio ---#"
+execute_chdoor_cmd "mkinitcpio -p linux"
 
-printf "\n##### USER #####\n"
-read -p "Username: " username
-read -p "Complete Name: " complete_name
-execute_cmd "useradd -m -G wheel,docker  -s /bin/zsh -c \"$complete_name\" $username"
-execute_cmd "passwd $username"
-execute_cmd "visudo" # Add wheel group permission, for sudo
+echo "#--- Setting user ---#"
+add_user
+execute_chroot_cmd "visudo" # Add wheel group permission, for sudo
 
-printf "\n##### ROOT #####\n"
+echo "#--- Root password ---#"
 execute_cmd "passwd"
 
-printf "\n##### HOSTNAME #####\n"
+echo "#--- Hostname ---#"
 read -p "Hostname: " hostname
-execute_cmd "echo $hostname >> /etc/hostname"
+execute_chroot_cmd "echo $hostname >> /etc/hostname"
 
-printf "\n##### ,BOOTLOADER #####\n"
-# execute_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
-# execute_cmd "grub-install --target=i386-pc $disk"
-# execute_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
-execute_cmd "refind-install"
+echo  "#--- Bootloader ---#"
+exectute_chroot_cmd "refind-install"
+#execute_chroot_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+#execute_chroot_cmd "grub-install --target=i386-pc $disk"
+#execute_chroot_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
-# Files
-cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/
-cp -f ./files/hosts /mnt/etc/
-cp -f ./files/lightdm.conf /mnt/etc/lightdm/
-
-# Enable system services
-printf "\n##### SERVICES #####\n"
-execute_cmd "systemctl enable NetworkManager.service ntpd.service
+echo "#--- Enable services ---#"
+execute_chroot_cmd "systemctl enable NetworkManager.service ntpd.service
 ntpdate.service paccache.service lightdm.service docker.service
 bluetooth.service"
 
+echo "#--- Misc files ---#"
+execute_cmd "cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/"
+execute_cmd "cp -f ./files/hosts /mnt/etc/"
+execute_cmd "cp -f ./files/lightdm.conf /mnt/etc/lightdm/"
+
+echo "#--- Config files ---#"
 execute_cmd "runuser -l lucastercas -c 'mkdir -p workspace'"
 execute_cmd "runuser -l lucastercas -c 'git clone https://github.com/lucastercas/arch-install workspace/arch-install'"
 execute_cmd "runuser -l lucastercas -c './workspace/arch-install/misc.sh'"
-
-# echo "Default env_reset,pwfeedback > visudo
-# ILoveCandy under Misc on /etc/pacman.conf
