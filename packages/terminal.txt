@@ -91,3 +91,10 @@ android-tools
 pandoc
 dnsutils
 light
+clang
+llvm
+acpid
+bat
+fd
+fzf
+evince
