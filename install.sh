@@ -1,5 +1,13 @@
 #!/bin/bash
 
+read_package_list() {
+  packages=""
+  while IFS= read -r line; do
+      packages="${packages} ${line}"
+  done < "$1"
+  return $packages
+}
+
 set -e -u
 
 source "$(pwd)/src/general.sh"
@@ -38,8 +46,8 @@ echo "#--- Setting mirrors ---#"
 mirrors_url='https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on'
 ${chroot_cmd} pacman -S pacman-contrib
 ${chroot_cmd} curl -s "$mirrors_url" \
-  | sed -e 's/^#Server/Server/' -e '/^#/d' \
-  | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+| sed -e 's/^#Server/Server/' -e '/^#/d' \
+| rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 ${chroot_cmd} pacman-key --init
 ${chroot_cmd} pacman-key --populate archlinux
 ${chroot_cmd} pacman -Sy
@@ -47,12 +55,13 @@ ${chroot_cmd} pacman -Sy
 echo "#--- Installing packages ---#"
 terminal_packages=""
 while IFS= read -r line; do
-    packages="${packages} ${line}"
+    terminal_packages="${terminal_packages} ${line}"
 done < "./packages/terminal.txt"
 ${chroot_cmd} pacman -S --noconfirm "${terminal_packages}"
+
 graphical_packages=""
 while IFS= read -r line; do
-    packages="${packages} ${line}"
+    graphical_packages="${graphical_packages} ${line}"
 done < "./packages/graphical.txt"
 ${chroot_cmd} pacman -S --noconfirm "${graphical_packages}"
 
@@ -82,13 +91,13 @@ ${chroot_cmd} refind-install
 
 echo "#--- Enable services ---#"
 ${chroot_cmd} systemctl enable \
-  NetworkManager \
-  lightdm \
-  ntpd \
-  docker \
-  bluetooth \
-  paccache \
-  ntpdate
+NetworkManager \
+lightdm \
+ntpd \
+docker \
+bluetooth \
+paccache \
+ntpdate
 
 echo "#--- Misc files ---#"
 cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/
@@ -97,10 +106,21 @@ cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 
 cmd_as_user="$chroot_cmd runuser -l $username"
 
+echo "#--- Install YAY ---#"
 yay_url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
-${cmd_as_user} curl "$yay_url" \
-  | tar xzv; \
-  cd yay && makepkg -si
+${cmd_as_user} curl "$yay_url" | tar xzv; cd yay && makepkg -si
+
+echo "#--- Install AUR Packages ---"
+aur_pkgs_file="./packages/aur.txt"
+aur_packages=""
+while IFS= read -r line; do
+  aur_packages="${packages} ${line}"
+done < "$aur_pkgs_file"
+${cmd_as_user} yay -S "$aur_packages"
+
+echo "#--- Install NVM ---#"
+nvm_url="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"
+${cmd_as_user} curl -o- "$nvm_url" | bash
 
 # echo "#--- Config files ---#"
 # ${chroot_cmd} runuser -l "$username" mkdir -p workspace
