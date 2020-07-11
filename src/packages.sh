@@ -10,12 +10,12 @@ install_packages() {
 }
 
 set_mirrors() {
-    $1 "pacman -S pacman-contrib"
-    $1" curl -s
+    exec_chroot_cmd "pacman -S pacman-contrib"
+    exec_chroot_cmd "curl -s
     'https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on'
     | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - >
     /etc/pacman.d/mirrorlist"
-    $1 "pacman-key --init"
-    $1 "pacman-key --populate archlinux"
-    $1 "pacman -Sy"
+    exec_chroot_cmd "pacman-key --init"
+    exec_chroot_cmd "pacman-key --populate archlinux"
+    exec_chroot_cmd "pacman -Sy"
 }
