@@ -33,7 +33,6 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh"
 git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
-
 printf "\n##### Dotfiles #####"
 rm "$HOME/.zshrc"
 rm "$HOME/.bashrc"
