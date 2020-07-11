@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -e
+set -e -u
 
-source "./src/general.sh"
-source "./src/disk.sh"
-source "./src/locale.sh"
+source "$(pwd)/src/general.sh"
+source "$(pwd)/src/disk.sh"
+source "$(pwd)/src/locale.sh"
+source "$(pwd)/src/packages.sh"
+source "$(pwd)/src/user.sh"
 
 # $1 Path to CSV file
 # $2 disk
@@ -21,7 +23,6 @@ start_create_partition() {
   done < "$1"
 }
 
-
 # $1 Path to CSV file
 # $2 disk
 start_format_partition() {
@@ -35,7 +36,6 @@ start_format_partition() {
     let "i+=1"
   done < "$1"
 }
-
 
 # $1 Path to CSV file
 # $2 disk
@@ -64,13 +64,13 @@ echo "#--- Setting disks ---#"
 lsblk
 
 echo "#--- Settings Host Mirrors ---#"
-set_mirrors exec_cmd
+set_mirrors execute_cmd
 
 echo "#--- Executing pacstrap ---#"
-exec_cmd "pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
+execute_cmd "pacstrap -i /mnt base base-devel vim git pacman-contrib curl"
 
 echo "#--- Generating fstab ---#"
-exec_cmd "genfstab -U /mnt >> /mnt/etc/fstab"
+execute_cmd "genfstab -U /mnt >> /mnt/etc/fstab"
 
 echo "#===== CHROOT =====#"
 echo "#--- Setting locale ---#"
@@ -84,11 +84,12 @@ install_packages "./packages/terminal.txt"
 install_packages "./packages/graphical.txt"
 
 echo "#--- Generating mkinitcpio ---#"
-execute_chdoor_cmd "mkinitcpio -p linux"
+execute_chroot_cmd "mkinitcpio -p linux"
 
 echo "#--- Setting user ---#"
 add_user
-execute_chroot_cmd "visudo" # Add wheel group permission, for sudo
+# execute_chroot_cmd "visudo" # Add wheel group permission, for sudo
+echo 'user ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
 echo "#--- Root password ---#"
 execute_cmd "passwd"
@@ -104,9 +105,8 @@ exectute_chroot_cmd "refind-install"
 #execute_chroot_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
 echo "#--- Enable services ---#"
-execute_chroot_cmd "systemctl enable NetworkManager.service ntpd.service
-ntpdate.service paccache.service lightdm.service docker.service
-bluetooth.service"
+execute_chroot_cmd "systemctl enable NetworkManager ntpd
+ntpdate paccache lightdm docker bluetooth"
 
 echo "#--- Misc files ---#"
 execute_cmd "cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/"

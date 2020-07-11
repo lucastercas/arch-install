@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set_locale() {
   exec_chroot_cmd "ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime"

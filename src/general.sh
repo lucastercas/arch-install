@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # $1 -> Command to execute
 execute_chroot_cmd() {
