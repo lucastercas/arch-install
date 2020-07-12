@@ -71,21 +71,18 @@ complete_name=""
 read -p "Complete Name: " complete_name
 ${chroot_cmd} useradd -m -G wheel,docker -s /bin/zsh -c "${complete_name}" "${username}"
 ${chroot_cmd} passwd "${username}"
-# execute_chroot_cmd "visudo" # Add wheel group permission, for sudo
-${chroot_cmd} echo 'user ALL=(ALL:ALL) ALL' >> /etc/sudoers
+${chroot_cmd} visudo # Add wheel group permission, for sudo
+# ${chroot_cmd} echo 'user ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
 echo "#--- Root password ---#"
 ${chroot_cmd} passwd
 
 echo "#--- Hostname ---#"
 read -p "Hostname: " hostname
-${chroot_cmd} echo "$hostname" >> /etc/hostname
+${chroot_cmd} "echo $hostname >> /etc/hostname"
 
 echo  "#--- Bootloader ---#"
 ${chroot_cmd} refind-install
-#execute_chroot_cmd "grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
-#execute_chroot_cmd "grub-install --target=i386-pc $disk"
-#execute_chroot_cmd "grub-mkconfig -o /boot/grub/grub.cfg"
 
 echo "#--- Enable services ---#"
 ${chroot_cmd} systemctl enable \
@@ -119,6 +116,7 @@ ${cmd_as_user} -c "git clone ${spaceship_url} ${zsh_dir}/themes/spaceship-prompt
 ${cmd_as_user} -c "ln -s ${zsh_dir}/spaceship-prompt/spaceship.zsh-theme ${zsh_dir}/themes/spaceship.zsh-theme"
 
 echo "#--- Dotfiles ---#"
+rm /mnt/home/${username}/.bashrc /mnt/home/${username}/.zshrc
 dotfiles_url="https://github.com/lucastercas/dotfiles"
 ${cmd_as_user} -c "git clone --bare ${dotfiles_url} /home/${username}/.cfg"
 ${cmd_as_user} -c "git --git-dir=/home/${username}/.cfg/ --work-tree=/home/${username} checkout"
