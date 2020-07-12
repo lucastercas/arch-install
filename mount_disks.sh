@@ -1,10 +1,8 @@
 #!/bin/bash
 
-read -p "Disk: " disk
+set -eu
 
-mkfs.fat -F32 "/dev/${disk}1"
-mkfs.ext4 "/dev/${disk}2"
-mkfs.ext4 "/dev/${disk}3"
+read -p "Disk: " disk
 
 mount "/dev/${disk}2" /mnt
 
