@@ -70,13 +70,13 @@ terminal_packages=""
 while IFS= read -r line; do
     terminal_packages="${terminal_packages} ${line}"
 done < "./packages/terminal.txt"
-${chroot_cmd} pacman -S --noconfirm "${terminal_packages}"
+${chroot_cmd} pacman -S --noconfirm ${terminal_packages}
 
 graphical_packages=""
 while IFS= read -r line; do
     graphical_packages="${graphical_packages} ${line}"
 done < "./packages/graphical.txt"
-${chroot_cmd} pacman -S --noconfirm "${graphical_packages}"
+${chroot_cmd} pacman -S --noconfirm ${graphical_packages}
 
 echo "#--- Generating mkinitcpio ---#"
 ${chroot_cmd} mkinitcpio -p linux
@@ -129,7 +129,7 @@ aur_packages=""
 while IFS= read -r line; do
   aur_packages="${packages} ${line}"
 done < "$aur_pkgs_file"
-${cmd_as_user} yay -S "$aur_packages"
+${cmd_as_user} yay -S ${aur_packages}
 
 echo "#--- Install NVM ---#"
 nvm_url="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"
