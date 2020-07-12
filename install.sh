@@ -28,18 +28,18 @@ echo "#===== Live Medium =====#"
 echo "#--- Setting disks ---#"
 lsblk
 
-read -p "Disk: " disk
-mkfs.fat -F32 "/dev/${disk}1"
-mkfs.ext4 "/dev/${disk}2"
-mkfs.ext4 "/dev/${disk}3"
+# read -p "Disk: " disk
+# mkfs.fat -F32 "/dev/${disk}1"
+# mkfs.ext4 "/dev/${disk}2"
+# mkfs.ext4 "/dev/${disk}3"
 
-mount "/dev/${disk}2" /mnt
+# mount "/dev/${disk}2" /mnt
 
-mkdir -p /mnt/efi
-mount "/dev/${disk}1" /mnt/efi
+# mkdir -p /mnt/efi
+# mount "/dev/${disk}1" /mnt/efi
 
-mkdir -p /mnt/home
-mount "/dev/${disk}3" /mnt/home
+# mkdir -p /mnt/home
+# mount "/dev/${disk}3" /mnt/home
 
 echo "#--- Execute pacstrap ---#"
 pacstrap -i /mnt base base-devel vim git pacman-contrib curl
