@@ -108,7 +108,7 @@ cp -f ./files/70-synaptics.conf /mnt/etc/X11/xorg.conf.d/
 cp -f ./files/hosts /mnt/etc/
 cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 
-cmd_as_user="${chroot_cmd} runuser -l ${username}"
+cmd_as_user="${chroot_cmd} runuser -P -l ${username}"
 
 echo "#--- Install YAY ---#"
 yay_url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
