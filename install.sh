@@ -108,5 +108,6 @@ cp -f ./files/70-synaptics.conf /mnt/etc/X11/xorg.conf.d/
 cp -f ./files/hosts /mnt/etc/
 cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 
-cp setup.sh /mnt/home/lucastercas
+cp setup.sh /mnt/home/lucastercas/setup.sh
 cp packages/aur.txt /mnt/home/lucastercas/aur.txt
+arch-chroot /mnt su - lucastercas -s /bin/zsh /home/lucastercas/setup.sh
