@@ -42,7 +42,7 @@ lsblk
 # mount "/dev/${disk}3" /mnt/home
 
 echo "#--- Execute pacstrap ---#"
-pacstrap -i /mnt base base-devel vim git pacman-contrib curl
+pacstrap -i /mnt base base-devel
 
 echo "#--- Generate fstab ---#"
 genfstab -U /mnt >> /mnt/etc/fstab
