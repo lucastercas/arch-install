@@ -63,7 +63,7 @@ ${chroot_cmd} curl -s "$mirrors_url" \
 | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 ${chroot_cmd} pacman-key --init
 ${chroot_cmd} pacman-key --populate archlinux
-${chroot_cmd} pacman -Sy
+${chroot_cmd} pacman -Sy --noconfirm
 
 echo "#--- Installing packages ---#"
 terminal_packages=""
@@ -84,8 +84,8 @@ ${chroot_cmd} mkinitcpio -p linux
 echo "#--- Setting user ---#"
 read -p "Username: " username
 read -p "Complete Name: " complete_name
-${chroot_cmd} useradd -m -G wheel,docker -s /bin/zsh -c "$complete_name" "$username"
-${chroot_cmd} passwd "$username"
+${chroot_cmd} useradd -m -G wheel,docker -s /bin/zsh -c "${complete_name}" "${username}"
+${chroot_cmd} passwd "${username}"
 # execute_chroot_cmd "visudo" # Add wheel group permission, for sudo
 ${chroot_cmd} echo 'user ALL=(ALL:ALL) ALL' >> /etc/sudoers
 
@@ -129,7 +129,7 @@ aur_packages=""
 while IFS= read -r line; do
   aur_packages="${packages} ${line}"
 done < "$aur_pkgs_file"
-${cmd_as_user} yay -S ${aur_packages}
+${cmd_as_user} yay --noconfirm -S ${aur_packages}
 
 echo "#--- Install NVM ---#"
 nvm_url="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"
