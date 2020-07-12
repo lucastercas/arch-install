@@ -8,7 +8,7 @@
 #   return $packages
 # }
 
-# set -e -u
+set -eux
 
 # source "$(pwd)/src/general.sh"
 # source "$(pwd)/src/disk.sh"
@@ -16,7 +16,7 @@
 # source "$(pwd)/src/packages.sh"
 # source "$(pwd)/src/user.sh"
 
-# chroot_cmd="arch-chroot /mnt"
+chroot_cmd="arch-chroot /mnt"
 
 # echo '    _             _       ___           _        _ _ '
 # echo '   / \   _ __ ___| |__   |_ _|_ __  ___| |_ __ _| | |'
