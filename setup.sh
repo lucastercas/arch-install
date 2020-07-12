@@ -5,11 +5,10 @@ set -eux
 read -p "Username: " username
 
 chroot_cmd="arch-chroot /mnt"
-cmd_as_user="${chroot_cmd} runuser -l ${username}"
 
 echo "#--- Install YAY ---#"
 yay_url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
-${cmd_as_user} -c "curl ${yay_url} | tar -xzv; cd yay && makepkg -si"
+curl ${yay_url} | tar -xzv; cd yay && makepkg -si
 
 echo "#--- Install AUR Packages ---"
 aur_pkgs_file="./aur.txt"
@@ -17,7 +16,7 @@ aur_packages=""
 while IFS= read -r line; do
   aur_packages="${packages} ${line}"
 done < "${aur_pkgs_file}"
-${cmd_as_user} -c "yay --noconfirm -S ${aur_packages}"
+yay --noconfirm -S ${aur_packages}
 
 echo "#--- Install NVM ---#"
 nvm_url="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"

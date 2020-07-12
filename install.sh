@@ -110,4 +110,4 @@ cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 
 cp setup.sh /mnt/home/lucastercas/setup.sh
 cp packages/aur.txt /mnt/home/lucastercas/aur.txt
-arch-chroot /mnt su - lucastercas -s /bin/zsh /home/lucastercas/setup.sh
+arch-chroot /mnt runuser -l lucastercas -c "/home/lucastercas/setup.sh"
