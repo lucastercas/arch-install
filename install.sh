@@ -112,7 +112,7 @@ cmd_as_user="${chroot_cmd} runuser -l ${username}"
 
 echo "#--- Install YAY ---#"
 yay_url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
-${cmd_as_user} -c "curl "$yay_url" | tar xzv; cd yay && makepkg -si"
+${cmd_as_user} -c "curl ${yay_url} -o yay.tar.gz | tar xzv; cd yay && makepkg -si"
 
 echo "#--- Install AUR Packages ---"
 aur_pkgs_file="./packages/aur.txt"
