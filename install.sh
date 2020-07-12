@@ -138,8 +138,8 @@ ${cmd_as_user} -c "ln -s ${zsh_dir}/spaceship-prompt/spaceship.zsh-theme ${zsh_d
 
 echo "#--- Dotfiles ---#"
 dotfiles_url="https://github.com/lucastercas/dotfiles"
-${cmd_as_user} git clone --base "${dotfiles_url}" "/home/${username}/.cfg"
-${cmd_as_user} git --git-dir="/home/${username}/.cfg/" --work-tree="/home/${username}" checkout
+${cmd_as_user} -c "git clone --bare ${dotfiles_url} /home/${username}/.cfg"
+${cmd_as_user} -c "git --git-dir=/home/${username}/.cfg/ --work-tree=/home/${username} checkout"
 
 # echo "#--- Config files ---#"
 # ${chroot_cmd} runuser -l "$username" mkdir -p workspace
