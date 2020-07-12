@@ -72,7 +72,7 @@
 
 # echo "#--- Setting user ---#"
 # username=""
-# read -p "Username: " username
+read -p "Username: " username
 # complete_name=""
 # read -p "Complete Name: " complete_name
 # ${chroot_cmd} useradd -m -G wheel,docker -s /bin/zsh -c "${complete_name}" "${username}"
