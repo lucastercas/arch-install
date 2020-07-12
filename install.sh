@@ -104,7 +104,7 @@ paccache \
 ntpdate
 
 echo "#--- Misc files ---#"
-cp -f ./files/70-synaptics.conf /mnt/etc/xorg.conf.d/
+cp -f ./files/70-synaptics.conf /mnt/etc/X11/xorg.conf.d/
 cp -f ./files/hosts /mnt/etc/
 cp -f ./files/lightdm.conf /mnt/etc/lightdm/
 
