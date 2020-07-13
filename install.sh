@@ -42,24 +42,15 @@ echo "#--- Setting mirrors ---#"
 mirrors_url='https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on'
 ${chroot_cmd} pacman -S --noconfirm pacman-contrib
 ${chroot_cmd} curl -s "$mirrors_url" \
-| sed -e 's/^#Server/Server/' -e '/^#/d' \
-| rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+  | sed -e 's/^#Server/Server/' -e '/^#/d' \
+  | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 ${chroot_cmd} pacman-key --init
 ${chroot_cmd} pacman-key --populate archlinux
 ${chroot_cmd} pacman -Sy --noconfirm
 
-echo "#--- Installing packages ---#"
-terminal_packages=""
-while IFS= read -r line; do
-    terminal_packages="${terminal_packages} ${line}"
-done < "./packages/terminal.txt"
-${chroot_cmd} pacman -S --noconfirm ${terminal_packages}
-
-graphical_packages=""
-while IFS= read -r line; do
-    graphical_packages="${graphical_packages} ${line}"
-done < "./packages/graphical.txt"
-${chroot_cmd} pacman -S --noconfirm ${graphical_packages}
+echo "#--- Install Terminal Packages ---#"
+./packages.sh "./packages/terminal.txt"
+./packages.sh "./packages/graphical.txt"
 
 echo "#--- Generating mkinitcpio ---#"
 ${chroot_cmd} mkinitcpio -p linux
