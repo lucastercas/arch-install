@@ -6,7 +6,7 @@ gitkraken
 google-chrome
 mongodb-compass
 obinskit
-polybar
+polybar-git
 postman
 pop-gtk-theme
 ttf-unifont
