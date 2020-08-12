@@ -3,11 +3,11 @@
 set -eux
 
 read_package_list() {
-  packages=""
-  while IFS= read -r line; do
-      packages="${packages} ${line}"
-  done < "$1"
-  return $packages
+    packages=""
+    while IFS= read -r line; do
+        packages="${packages} ${line}"
+    done < "$1"
+    return $packages
 }
 
 chroot_cmd="arch-chroot /mnt"
@@ -84,27 +84,6 @@ docker \
 bluetooth \
 paccache \
 ntpdate
-
-echo "#--- Misc files ---#"
-cp -f ./files/70-synaptics.conf /mnt/etc/X11/xorg.conf.d/
-cp -f ./files/hosts /mnt/etc/
-cp -f ./files/lightdm.conf /mnt/etc/lightdm/
-
-cmd_as_user="${chroot_cmd} runuser -l ${username}"
-
-echo "#--- Install NVM ---#"
-nvm_url="https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh"
-${cmd_as_user} -c "curl -o- ${nvm_url} | bash"
-
-echo "#--- Oh My ZSH ---#"
-omz_url="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-${cmd_as_user} -c "sh -c $(curl -fsSL ${omz_url})"
-
-echo "#--- SpaceShip Prompt ---#"
-spaceship_url="https://github.com/denysdovhan/spaceship-prompt.git"
-zsh_dir="/home/$username/.oh-my-zsh"
-${cmd_as_user} -c "git clone ${spaceship_url} ${zsh_dir}/themes/spaceship-prompt"
-${cmd_as_user} -c "ln -s ${zsh_dir}/spaceship-prompt/spaceship.zsh-theme ${zsh_dir}/themes/spaceship.zsh-theme"
 
 echo "#--- Dotfiles ---#"
 rm /mnt/home/${username}/.bashrc /mnt/home/${username}/.zshrc

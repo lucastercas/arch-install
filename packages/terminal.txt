@@ -1,5 +1,5 @@
 grub
-vim
+gvim
 efibootmgr
 dosfstools
 os-prober
