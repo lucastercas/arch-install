@@ -13,3 +13,5 @@ ttf-unifont
 spaceship-prompt-git
 dive
 ttf-iosevka
+breeze-amber-cursor-theme
+pop-gtk-theme-git
