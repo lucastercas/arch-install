@@ -23,6 +23,7 @@ git
 xclip
 pacman-contrib
 ntp
+jsoncpp
 rsync
 parted
 libinput
