@@ -10,6 +10,10 @@ echo "#--- Install AUR Packages ---"
 aur_pkgs_file="./packages/aur.txt"
 packages=""
 while IFS= read -r line; do
+<<<<<<< HEAD
   packages="${packages} ${line}"
+=======
+  aur_packages="${aur_packages} ${line}"
+>>>>>>> 59be0a5... fix(aur-packages): Fix typo
 done < "$aur_pkgs_file"
 yay --noconfirm -S "${packages}"

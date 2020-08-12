@@ -12,4 +12,4 @@ pop-gtk-theme
 ttf-unifont
 spaceship-prompt-git
 dive
-ttk-iosevka
+ttf-iosevka

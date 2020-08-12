@@ -98,5 +98,8 @@ bat
 fd
 fzf
 evince
-xorg-server-xephyr
-plymouth
+xdg-user-dirs
+scrot
+mpc
+mpd
+clipmenu
