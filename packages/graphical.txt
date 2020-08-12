@@ -42,9 +42,6 @@ deluge
 deluge-gtk
 xscreensaver
 telegram-desktop
-nvidia
-nvidia-settings
-opencl-nvidia
 virtualbox
 virtualbox-host-modules-arch
 virtualbox-guest-iso
