@@ -84,9 +84,3 @@ docker \
 bluetooth \
 paccache \
 ntpdate
-
-echo "#--- Dotfiles ---#"
-rm /mnt/home/${username}/.bashrc /mnt/home/${username}/.zshrc
-dotfiles_url="https://github.com/lucastercas/dotfiles"
-${cmd_as_user} -c "git clone --bare ${dotfiles_url} /home/${username}/.cfg"
-${cmd_as_user} -c "git --git-dir=/home/${username}/.cfg/ --work-tree=/home/${username} checkout"

@@ -1,19 +1,15 @@
 #!/bin/bash
 
-set -eu
+set -eux
 
 #echo "#--- Install YAY ---#"
 #yay_url="https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz"
 #curl ${yay_url} | tar -xzv; cd yay && makepkg -si
 
 echo "#--- Install AUR Packages ---"
-aur_pkgs_file="./packages/aur.txt"
+aur_pkgs_file="./packages/aur.pkgs"
 packages=""
 while IFS= read -r line; do
-<<<<<<< HEAD
   packages="${packages} ${line}"
-=======
-  aur_packages="${aur_packages} ${line}"
->>>>>>> 59be0a5... fix(aur-packages): Fix typo
 done < "$aur_pkgs_file"
 yay --noconfirm -S "${packages}"

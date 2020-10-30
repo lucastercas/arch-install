@@ -6,10 +6,11 @@
 The standard Arch image does not come with Git or Ruby, so you need to install it:
 
 ```bash
-pacman -Sy
-pacman -S git ruby
-git clone https://github.com/lucastercas/arch-install
-cd arch-install
+$ pacman -Sy
+$ pacman -S git
+$ git clone https://github.com/lucastercas/arch-install
+$ cd arch-install
+$ 
 ```
 
 ## How to Use
