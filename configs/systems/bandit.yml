@@ -4,21 +4,21 @@ disks:
   sda:
     size: 240GiB
     partitions:
-      - number: 2
+      - number: '2'
         name: root
         mount_point: /
         size: 160GiB
         fs_type: ext4
-        partition_type: 8300
-      - number: 1
+        partition_type: '8300'
+      - number: '1'
         name: efi
         mount_point: /boot/efi
         size: 300MiB
         fs_type: fat32
         partition_type: ef00
-      - number: 3
+      - number: '3'
         name: home
         mount_point: /home
         size: 72GiB
         fs_type: ext4
-        partition_type: 8302
+        partition_type: '8302'
