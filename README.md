@@ -3,9 +3,18 @@
 
 ## Before Installation
 
+Connect to network:
+```bash
+$ iwconfig
+$ ip link set <interface> up
+$ iwctl
+$$ device list
+$$ station wlan0 get-networks
+$$ station wlan0 connect <ssid>
+```
+
 The standard Arch image does not come with Git or Ruby, so you need to install it,
 and then clone this repository:
-
 ```bash
 $ pacman -Sy
 $ pacman -S git ruby

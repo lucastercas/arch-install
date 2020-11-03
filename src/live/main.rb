@@ -6,8 +6,6 @@ require_relative('disks')
 def setup_live(config)
   puts("#=== setting up live system ===#")
   system("lsblk")
-  setup_disk(disks)
-
   setup_disks(config['disks'])
   system("pacstrap -i /mnt base base-devel")
   system("genfstab -U /mnt >> /mnt/etc/fstab")
