@@ -16,11 +16,10 @@ $$ station wlan0 connect <ssid>
 The standard Arch image does not come with Git or Ruby, so you need to install it,
 and then clone this repository:
 ```bash
-$ pacman -Sy
-$ pacman -S git ruby
+$ pacman -Sy git ruby
 $ git clone https://github.com/lucastercas/arch-install
 $ cd arch-install
-$ 
+$ ./main.rb
 ```
 
 ## How to Use

@@ -8,7 +8,7 @@ def setup_chroot(config)
   set_mirrors()
   
   packages_file = "../../configs/packages.yml"
-  packages = read_yml(packages_file)
+  packages = read_yaml(packages_file)
 
   install_packages(packages["packages"]["base"].keys)
   install_packages(packages["packages"]["graphical"].keys)
