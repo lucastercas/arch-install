@@ -24,6 +24,7 @@ install_packages(config["packages"]["graphical"].keys)
 system("arch-chroot /mnt mkinitcpio -p linux")
 
 create_user()
+# To-Do: Update visudo
 
 puts("#--- root password ---#")
 system("arch-chroot /mnt passwd")
