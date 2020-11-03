@@ -3,7 +3,9 @@
 def create_partitions(disk_name, disk)
   disk['partitions'].each do |partition|
     number = partition['number']
-    system("sgdisk -n #{number}:0:+#{partition['size']} -c #{number}:#{partition['name']} -t #{number}:#{partition['partition_type']} /dev/#{disk_name}#{number}")
+    cmd = "sgdisk -n #{number}:0:+#{partition['size']} -c #{number}:#{partition['name']} -t #{number}:#{partition['partition_type']} /dev/#{disk_name}#{number}"
+    puts(cmd)
+    system(cmd)
   end
 end
 
