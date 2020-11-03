@@ -19,7 +19,7 @@ def setup_disks(disks)
     opt = gets().chomp()
     system("sgdisk -o /dev/#{disk['name']}") if opt == "y"
     create_partitions(disk)
-    mount_partitions(disk)
     format_partitions(disk)
+    mount_partitions(disk)
   end
 end
