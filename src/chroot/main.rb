@@ -7,7 +7,7 @@ def setup_chroot(config)
   set_locale()
   set_mirrors()
   
-  packages_file = "../../configs/packages.yml"
+  packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
 
   install_packages(packages["packages"]["base"].keys)
