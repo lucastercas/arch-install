@@ -15,11 +15,9 @@ def setup_disks(disks)
   puts("#--- setting disks ---#")
   disks.each do |disk|
     puts("==> Setting up disk #{disk[0]}")
-    print("Format disk #{disk[0]} [y/n]")?
+    print("Format disk #{disk[0]}? [y/n]")
     opt = gets().chomp()
-    if opt == "y" then
-      system("sgdisk -o /dev/#{disk[0]}")
-    end
+    system("sgdisk -o /dev/#{disk[0]}") if opt == "y"
     create_partitions(disk[0], disk[1])
     mount_partitions(disk[0], disk[1])
     format_partitions(disk[0], disk[1])
