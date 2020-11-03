@@ -54,7 +54,7 @@ end
 
 def install_packages(packages)
   puts("#--- installing packages")
-  system("arch-chroot /mnt sudo pacman -S --noconfirm #{packages.join(' ')}")
+  system("arch-chroot /mnt yes |  pacman -S --noconfirm #{packages.join(' ')}")
 end
 
 def create_user()
