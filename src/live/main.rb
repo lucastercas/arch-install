@@ -17,7 +17,9 @@ def setup_disks(disks)
     puts("==> Setting up disk #{disk[0]}")
     print("Format disk #{disk[0]} [y/n]")?
     opt = gets().chomp()
-    system("sgdisk -o /dev/#{disk[0]}") if opt == "y"
+    if opt == "y" then
+      system("sgdisk -o /dev/#{disk[0]}")
+    end
     create_partitions(disk[0], disk[1])
     mount_partitions(disk[0], disk[1])
     format_partitions(disk[0], disk[1])
