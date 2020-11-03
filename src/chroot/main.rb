@@ -11,7 +11,7 @@ def setup_chroot(config)
   packages = read_yaml(packages_file)
 
   install_packages(packages["packages"]["base"].keys)
-  # install_packages(packages["packages"]["graphical"].keys)
+  install_packages(packages["packages"]["graphical"].keys)
 
   system("arch-chroot /mnt mkinitcpio -p linux")
 
