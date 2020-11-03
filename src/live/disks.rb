@@ -4,8 +4,7 @@ def create_partitions(disk)
   puts("#--- creating partitions for #{disk['name']}")
   disk['partitions'].sort_by{ |w| w['number']}.each do |partition|
     number = partition['number']
-    cmd = "sgdisk -n #{number}:0:+#{partition['size']} -c #{number}:#{partition['name']} -t #{number}:#{partition['partition_type']} /dev/#{disk['name']}"
-    system(cmd)
+    system("sgdisk -n #{number}:0:+#{partition['size']} -c #{number}:#{partition['name']} -t #{number}:#{partition['partition_type']} /dev/#{disk['name']}")
   end
 end
 

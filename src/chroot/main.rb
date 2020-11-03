@@ -33,7 +33,7 @@ def setup_chroot(config)
 end
 
 def set_locale()
-  system("#--- setting locale ---#")
+  puts("#--- setting locale ---#")
   system("arch-chroot /mnt ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime")
   system("arch-chroot /mnt sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen")
   system("arch-chroot /mnt locale-gen")
