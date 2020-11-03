@@ -39,7 +39,6 @@ ${chroot_cmd} hwclock --systohc
 ${chroot_cmd} echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
 echo "#--- Setting mirrors ---#"
-mirrors_url='https://www.archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&ip_version=4&use_mirror_status=on'
 ${chroot_cmd} pacman -S --noconfirm pacman-contrib
 ${chroot_cmd} curl -s "$mirrors_url" \
   | sed -e 's/^#Server/Server/' -e '/^#/d' \
