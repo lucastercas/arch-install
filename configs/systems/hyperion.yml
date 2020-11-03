@@ -1,0 +1,18 @@
+---
+hostname: hyperion
+disks:
+  sda:
+    size: 120GiB
+    partitions:
+      - number: 2
+        size: 71GiB
+        mount_point: /
+        type: ext4
+      - number: 1
+        size: 300MiB
+        type: fat32
+        mount_point: /boot/efi
+      - number: 3
+        size: 40GiB
+        mount_point: /home
+        type: ext4

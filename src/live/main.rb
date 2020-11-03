@@ -1,10 +1,23 @@
 #!/usr/bin/ruby
 
-require_relative 'disks'
+require_relative('../lib')
+require_relative('disks')
+
+def setup_live(config)
+  puts("#=== setting up live system ===#")
+  system("lsblk")
+  setup_disk(disks)
+
+  setup_disks(config['disks'])
+  system("pacstrap -i /mnt base base-devel")
+  system("genfstab -U /mnt >> /mnt/etc/fstab")
+end
 
 def setup_disks(disks)
+  puts("#--- setting disks ---#")
   disks.each do |disk|
     puts("==> Setting up disk #{disk[0]}")
+    create_partitions(disk[0], disk[1])
     mount_partitions(disk[0], disk[1])
     format_partitions(disk[0], disk[1])
   end

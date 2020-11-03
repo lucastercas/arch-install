@@ -1,5 +1,37 @@
 #!/usr/bin/ruby
 
+require_relative('../lib')
+
+def setup_chroot(config)
+  puts("#=== setting up chroot ===#")
+  set_locale()
+  set_mirrors()
+  
+  packages_file = "../../configs/packages.yml"
+  packages = read_yml(packages_file)
+
+  install_packages(packages["packages"]["base"].keys)
+  install_packages(packages["packages"]["graphical"].keys)
+
+  system("arch-chroot /mnt mkinitcpio -p linux")
+
+  create_user()
+  # To-Do: Update visudo
+
+  puts("#--- root password ---#")
+  system("arch-chroot /mnt passwd")
+
+  puts("#--- hostname ---#")
+  print("Hostname: ")
+  hostname = gets().chomp()
+  system("arch-chroot /mnt echo #{hostname} >> /etc/hostname")
+
+  puts("#--- bootloader ---#")
+  system("arch-chroot /mnt refind-install")
+
+  enable_services()
+end
+
 def set_locale()
   system("#--- setting locale ---#")
   system("arch-chroot /mnt ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime")

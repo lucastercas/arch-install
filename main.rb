@@ -5,36 +5,25 @@ require_relative 'src/live/main'
 require_relative 'src/chroot/main'
 
 print_header()
-system("lsblk")
-setup_disk(disks)
 
 print("config to load: ")
-config = gets().chomp()
-config = read_yaml("system/#{config}.yml")
+config_file = gets().chomp()
+config = read_yaml("configs/systems/#{config_file}.yml")
 
-setup_disks(config['disks'])
-system("pacstrap -i /mnt base base-devel")
-system("genfstab -U /mnt >> /mnt/etc/fstab")
-
-set_locale()
-set_mirrors()
-install_packages(config["packages"]["base"].keys)
-install_packages(config["packages"]["graphical"].keys)
-
-system("arch-chroot /mnt mkinitcpio -p linux")
-
-create_user()
-# To-Do: Update visudo
-
-puts("#--- root password ---#")
-system("arch-chroot /mnt passwd")
-
-puts("#--- hostname ---#")
-print("Hostname: ")
-hostname = gets().chomp()
-system("arch-chroot /mnt echo #{hostname} >> /etc/hostname")
-
-puts("#--- bootloader ---#")
-system("arch-chroot /mnt refind-install")
-
-enable_services()
+while true do
+  puts("""Choose one:
+    1. Live System
+    2. Chroot
+    3. Exit
+  """)
+  print("Choice: ")
+  opt = gets().chomp()
+  case opt.to_i()
+  when 1
+    setup_live(config)
+  when 2
+    setup_chroot(config)
+  when 3
+    break
+  end
+end
