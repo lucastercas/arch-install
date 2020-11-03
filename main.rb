@@ -1,8 +1,8 @@
 #!/usr/bin/ruby
 
-require_relative 'src/lib'
-require_relative 'src/live/main'
-require_relative 'src/chroot/main'
+require_relative('src/lib')
+require_relative('src/live/main')
+require_relative('src/chroot/main')
 
 print_header()
 
