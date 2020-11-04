@@ -7,9 +7,9 @@ def setup_dotfiles(config)
   oh_my_zsh()
   
   dotfiles_git = "https://github.com/lucastercas/dotfiles"
-  system("rm $HOME/.bashrc $HOME/.zshrc")
+  system("rm -rf ${HOME]/{.bashrc,.zshrc,.cfg,bin,.vimrc}")
   system("git clone --bare #{dotfiles_git} ${HOME}/.cfg")
-  system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout")
+  system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
   install_yay()
   install_aur_pkgs()
