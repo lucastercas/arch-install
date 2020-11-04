@@ -6,7 +6,7 @@ def setup_dotfiles()
   
   dotfiles_git = "https://github.com/lucastercas/dotfiles"
   system("rm $HOME/.bashrc $HOME/.zshrc")
-  system("git clone --base #{dotfiles_git} $HOME/.cfg")
+  system("git clone --bare #{dotfiles_git} $HOME/.cfg")
   system("git --git-dir=$HOME/.cfg --work-tree=$HOME checkout")
 
   install_yay()
