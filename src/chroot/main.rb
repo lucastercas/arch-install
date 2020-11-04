@@ -45,7 +45,7 @@ def set_mirrors()
   country='BR'
   url="https://www.archlinux.org/mirrorlist/?country=#{country}&protocol=http&protocol=https&ip_version=4&use_mirror_status=on"
   system("arch-chroot /mnt pacman -S --noconfirm pacman-contrib")
-  system("arch-chroot /mnt curl -s #{url} sed -e \'s/^#Server/Server/\' -e \'/^#/d\' rankmirrors -n 5 - > /etc/pacman.d/mirrorlist")
+  system("arch-chroot /mnt curl -s #{url} | sed -e \'s/^#Server/Server/\' -e \'/^#/d\' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist")
   system("arch-chroot /mnt pacman-key --init")
   system("arch-chroot /mnt pacman-key --populate archlinux")
   system("arch-chroot /mnt pacman -Sy --noconfirm")
