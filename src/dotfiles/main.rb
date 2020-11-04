@@ -11,6 +11,9 @@ def setup_dotfiles()
 
   install_yay()
   install_aur_pkgs()
+  nvm()
+  omz()
+  themes()
 end
 
 def install_yay()
@@ -20,4 +23,13 @@ end
 
 def install_aur_pkgs()
   system("yay -S dropbox")
+end
+
+def nvm()
+end
+
+def omz()
+end
+
+def themes()
 end

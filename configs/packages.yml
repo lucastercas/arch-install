@@ -8,7 +8,7 @@ packages:
     efibootmgr:
     git:
     grub:
-    # gvim:
+    gvim:
     os-prober:
     linux:
     linux-headers:

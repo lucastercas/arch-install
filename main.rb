@@ -12,10 +12,12 @@ config_file = gets().chomp()
 config = read_yaml("configs/systems/#{config_file}.yml")
 
 while true do
+  system("clear")
   puts("""Choose one:
     1. Live System
     2. Chroot
-    3. Exit
+    3. Dotfiles
+    4. Exit
   """)
   print("Choice: ")
   opt = gets().chomp()
