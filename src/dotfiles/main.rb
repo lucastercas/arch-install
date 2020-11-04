@@ -1,8 +1,10 @@
 #!/usr/bin/ruby
 
-def setup_dotfiles()
+def setup_dotfiles(config)
   system("clear")
   puts("#=== setting dotfiles ===")
+  
+  oh_my_zsh()
   
   dotfiles_git = "https://github.com/lucastercas/dotfiles"
   system("rm $HOME/.bashrc $HOME/.zshrc")
@@ -12,7 +14,6 @@ def setup_dotfiles()
   install_yay()
   install_aur_pkgs()
   nvm()
-  oh_my_zsh()
   themes()
 end
 
@@ -24,8 +25,10 @@ end
 
 def install_aur_pkgs()
   puts("#--- installing aur packages ---#")
+  packages_file = "configs/packages.yml"
+  packages = read_yaml(packages_file)
   system("sudo pacman-key --refresh-keys")
-  system("yay -S dropbox")
+  system("yay -S #{packages['packages']['aur'].keys.join(' ')}")
 end
 
 def nvm()

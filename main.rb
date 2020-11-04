@@ -27,7 +27,7 @@ while true do
   when 2
     setup_chroot(config)
   when 3
-    setup_dotfiles()
+    setup_dotfiles(config)
   when 4
     break
   end
