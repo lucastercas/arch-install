@@ -1,8 +1,5 @@
 ---
 hostname: bandit
-users:
-  - username: lucastercas
-    name: Lucas Tercas
 disks:
   - name: sda
     size: 240GiB
