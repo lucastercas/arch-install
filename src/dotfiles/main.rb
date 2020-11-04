@@ -7,6 +7,7 @@ def setup_dotfiles(config)
   oh_my_zsh()
   
   dotfiles_git = "https://github.com/lucastercas/dotfiles"
+  system("rm -rf ${HOME}/.cfg")
   system("git clone --bare #{dotfiles_git} ${HOME}/.cfg")
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
@@ -46,7 +47,7 @@ end
 def themes()
   puts("#--- installing spaceship ---#")
   spaceship_git = "https://github.com/denysdovhan/spaceship-prompt.git"
-  system("git clone #{spaceship_git} \"${ZSH_CUSTOM}/themes/spaceship-prompt\" --depth=1")
-  system("ln -s \"${ZSH_CUSTOM}/themes/spaceship-prompt/spaceship.zsh-theme\" \"${ZSH_CUSTOM}/themes/spaceship.zsh-theme\" 
-  ")
+  zsh_path="${HOME}/.oh-my.zsh/custom"
+  system("git clone #{spaceship_git} #{zsh_path}/themes/spaceship-prompt --depth=1")
+  system("ln -s #{zsh_path}/themes/spaceship-prompt/spaceship.zsh-theme #{zsh_path}/themes/spaceship.zsh-theme")
 end
