@@ -10,10 +10,10 @@ def setup_dotfiles(config)
   system("git clone --bare #{dotfiles_git} ${HOME}/.cfg")
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
-  install_yay()
-  install_aur_pkgs()
   nvm()
   themes()
+  install_yay()
+  install_aur_pkgs()
 end
 
 def install_yay()
