@@ -10,4 +10,8 @@ def user()
 
   system("arch-chroot /mnt useradd -m -G wheel,docker -s /bin/zsh -c \"#{name}\" #{username}")
   system("arch-chroot /mnt passwd #{username}")
+
+  install_git = "https://github.com/lucastercas/arch-install"
+  system("arch-chroot /mnt git clone #{install_git} /home/#{username}/arch-install")
+  system("arch-chroot /mnt chown -R #{username}:#{username} /home/#{username}")
 end

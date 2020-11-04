@@ -3,6 +3,7 @@
 require_relative('src/lib')
 require_relative('src/live/main')
 require_relative('src/chroot/main')
+require_relative('src/dotfiles/main')
 
 print_header()
 
@@ -24,6 +25,8 @@ while true do
   when 2
     setup_chroot(config)
   when 3
+    setup_dotfiles()
+  when 4
     break
   end
 end

@@ -4,6 +4,7 @@ require_relative('../lib')
 require_relative('disks')
 
 def setup_live(config)
+  system("clear")
   puts("#=== setting up live system ===#")
   system("lsblk")
   setup_disks(config['disks'])

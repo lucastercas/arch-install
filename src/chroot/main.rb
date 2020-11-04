@@ -7,6 +7,7 @@ require_relative('service')
 require_relative('bootloader')
 
 def setup_chroot(config)
+  system("clear")
   puts("#=== setting up chroot ===#")
   set_locale()
   set_mirrors()
