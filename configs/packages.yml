@@ -109,6 +109,7 @@ packages:
     mpc:
     clipmenu:
     wireguard-tools:
+    system-config-printer:
   graphical:
     xfce4:
     xfce4-screenshooter:
@@ -158,3 +159,11 @@ packages:
     virtualbox-guest-iso:
     libreoffice:
     viewnior:
+  aur:
+    dropbox:
+    spotify:
+    altair:
+    postman-bin:
+    insomnia:
+    polybar-git:
+    google-chrome:
