@@ -47,7 +47,7 @@ end
 def themes()
   puts("#--- installing spaceship ---#")
   spaceship_git = "https://github.com/denysdovhan/spaceship-prompt.git"
-  zsh_path="${HOME}/.oh-my.zsh/custom"
+  zsh_path="${HOME}/.oh-my-zsh/custom"
   system("git clone #{spaceship_git} #{zsh_path}/themes/spaceship-prompt --depth=1")
   system("ln -s #{zsh_path}/themes/spaceship-prompt/spaceship.zsh-theme #{zsh_path}/themes/spaceship.zsh-theme")
 end
