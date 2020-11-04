@@ -23,6 +23,20 @@ $ ./main.rb
 ```
 
 ## How to Use
+This installation consists of 3 steps:
+1. Live: On the ISO
+    - Setup, format and partitions
+    - pacstrap
+    - fstab
+2. Chroot: On the chroot environment (`arch-chroot`)
+    - locale
+    - mirrors
+    - packages
+    - users
+    - bootloader
+    - services
+3. Personal Files
+    - [dotfiles]()
 
 ## To-Do
 1. GUI of live (?)
