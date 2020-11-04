@@ -22,3 +22,11 @@ disks:
         size: 72GiB
         fs_type: ext4
         partition_type: "8302"
+services:
+  - NetworkManager
+  - lightdm
+  - ntpd
+  - docker
+  - bluetooth
+  - paccache
+  - ntpdate

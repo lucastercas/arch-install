@@ -108,6 +108,7 @@ packages:
     scrot:
     mpc:
     clipmenu:
+    wireguard-tools:
   graphical:
     xfce4:
     xfce4-screenshooter:

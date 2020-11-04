@@ -1,6 +1,8 @@
 #!/usr/bin/ruby
 
 require_relative('../lib')
+require_relative('user')
+require_relative('service')
 
 def setup_chroot(config)
   puts("#=== setting up chroot ===#")
@@ -15,21 +17,18 @@ def setup_chroot(config)
 
   system("arch-chroot /mnt mkinitcpio -p linux")
 
-  create_user()
+  user()
   # To-Do: Update visudo
 
   puts("#--- root password ---#")
   system("arch-chroot /mnt passwd")
 
   puts("#--- hostname ---#")
-  print("Hostname: ")
-  hostname = gets().chomp()
-  system("arch-chroot /mnt echo #{hostname} >> /etc/hostname")
+  system("arch-chroot /mnt echo #{config['hostname']} >> /etc/hostname")
+  
+  bootloader(config)
 
-  puts("#--- bootloader ---#")
-  system("arch-chroot /mnt refind-install")
-
-  enable_services()
+  services(config['services'].join(' '))
 end
 
 def set_locale()
@@ -57,18 +56,3 @@ def install_packages(packages)
   system("arch-chroot /mnt pacman -S --noconfirm #{packages.join(' ')}")
 end
 
-def create_user()
-  puts("#--- creating user ---#")
-  print("Username: ")
-  username = gets().chomp()
-  print("Name: ")
-  name = gets().chomp()
-  system("arch-chroot /mnt useradd -m -G wheel,docker -s /bin/zsh -c #{name} #{username}")
-  system("arch-chroot /mnt passwd #{username}")
-end
-
-def enable_services()
-  puts("#--- enabling services ---#")
-  services = "NetworkManager lightdm ntpd docker bluetooth paccache ntpdate"
-  system("arch-chroot /mnt systemctl enable #{services}")
-end
