@@ -10,6 +10,7 @@ def setup_dotfiles()
   system("git --git-dir=$HOME/.cfg --work-tree=$HOME checkout")
 
   install_yay()
+  install_aur_pkgs()
 end
 
 def install_yay()
@@ -18,5 +19,5 @@ def install_yay()
 end
 
 def install_aur_pkgs()
-
+  system("yay -S dropbox")
 end
