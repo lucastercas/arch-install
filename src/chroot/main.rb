@@ -6,8 +6,8 @@ require_relative('service')
 
 def setup_chroot(config)
   puts("#=== setting up chroot ===#")
-  # set_locale()
-  # set_mirrors()
+  set_locale()
+  set_mirrors()
   
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)

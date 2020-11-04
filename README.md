@@ -1,6 +1,6 @@
 # Arch Installation Script
 
-
+![logo](./docs/arch-logo.png)
 ## Before Installation
 
 Connect to network:
@@ -8,9 +8,9 @@ Connect to network:
 $ iwconfig
 $ ip link set <interface> up
 $ iwctl
-$$ device list
-$$ station wlan0 get-networks
-$$ station wlan0 connect <ssid>
+$$ device list # Print Interfaces
+$$ station <interface> get-networks # Print Networks
+$$ station <interface> connect <ssid>
 ```
 
 The standard Arch image does not come with Git or Ruby, so you need to install it,
