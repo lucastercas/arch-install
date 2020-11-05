@@ -8,7 +8,9 @@ def user()
   print("Name: ")
   name = gets().chomp()
 
-  system("arch-chroot /mnt useradd -m -G wheel,docker -s /bin/zsh -c \"#{name}\" #{username}")
+  groups = "wheel,docker,video"
+  shell = "/bin/zsh"
+  system("arch-chroot /mnt useradd -m -G #{groups} -s #{shell} -c \"#{name}\" #{username}")
   system("arch-chroot /mnt passwd #{username}")
   system("arch-chroot /mnt visudo")
 
