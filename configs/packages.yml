@@ -96,6 +96,7 @@ packages:
     android-tools:
     pandoc:
     dnsutils:
+    acpilight:
     light:
     clang:
     llvm:
@@ -134,7 +135,7 @@ packages:
     xorg-xrandr:
     xorg-drivers:
     xorg-apps:
-    xorg-xbacklight:
+    # xorg-xbacklight:
     xorg-server-xephyr:
     xorg-xmessage:
     xorg-xsetroot:
