@@ -115,6 +115,8 @@ packages:
     imagemagick:
     w3m:
     chafa:
+    kubectl:
+    ansible:
   graphical:
     xfce4:
     xfce4-screenshooter:
