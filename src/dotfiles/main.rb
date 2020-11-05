@@ -27,7 +27,7 @@ def install_aur_pkgs()
   puts("#--- installing aur packages ---#")
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
-  system("sudo pacman-key --refresh-keys")
+  system("sudo pacman-key --keyserver pool.sks-keyserver.net --refresh-keys")
   system("yay -S #{packages['packages']['aur'].keys.join(' ')}")
 end
 
