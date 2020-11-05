@@ -111,6 +111,10 @@ packages:
     clipmenu:
     wireguard-tools:
     system-config-printer:
+    neofetch:
+    imagemagick:
+    w3m:
+    chafa:
   graphical:
     xfce4:
     xfce4-screenshooter:
