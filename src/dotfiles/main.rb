@@ -12,6 +12,9 @@ def setup_dotfiles(config)
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
   nvm()
+  puts("#--- install node lts ---#")
+  system("nvm install --lts")
+  vim_plug()
   themes()
   install_yay()
   install_aur_pkgs()
@@ -50,4 +53,10 @@ def themes()
   zsh_path="${HOME}/.oh-my-zsh/custom"
   system("git clone #{spaceship_git} #{zsh_path}/themes/spaceship-prompt --depth=1")
   system("ln -s #{zsh_path}/themes/spaceship-prompt/spaceship.zsh-theme #{zsh_path}/themes/spaceship.zsh-theme")
+end
+
+def vim_plug()
+  puts("#--- installing vim plug---#")
+  script_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs #{script_url}")
 end
