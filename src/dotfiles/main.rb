@@ -71,6 +71,7 @@ def vim_plug()
   puts("#--- installing vim plug---#")
   script_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs #{script_url}")
+  system("vim -c PlugInstall")
 end
 
 def refind()
