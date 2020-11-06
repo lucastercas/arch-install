@@ -11,8 +11,8 @@ def setup_dotfiles(config)
   system("git clone --bare #{dotfiles_git} ${HOME}/.cfg")
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
-  nvm()
   
+  nvm()
   install_yay()
   install_aur_pkgs()
   
@@ -44,10 +44,12 @@ end
 
 def nvm()
   puts("#--- installing nvm ---#")
-  version = "v0.36.0"
-  script_url = "https://raw.githubusercontent.com/nvm-sh/nvm/#{version}/install.sh"
-  system("curl -fsSL #{script_url} | bash")
+  system("yay -S nvm")
   system("nvm install --lts")
+  # version = "v0.36.0"
+  # script_url = "https://raw.githubusercontent.com/nvm-sh/nvm/#{version}/install.sh"
+  # system("curl -fsSL #{script_url} | bash")
+  # system("nvm install --lts")
 end
 
 def oh_my_zsh()
