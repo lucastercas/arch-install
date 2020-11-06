@@ -65,6 +65,12 @@ def themes()
   zsh_path="${HOME}/.oh-my-zsh/custom"
   system("git clone #{spaceship_git} #{zsh_path}/themes/spaceship-prompt --depth=1")
   system("ln -s #{zsh_path}/themes/spaceship-prompt/spaceship.zsh-theme #{zsh_path}/themes/spaceship.zsh-theme")
+
+  puts("#--- setting greeter to lightdm-webkit2-greeter")
+  default = "#greeter-session=example-gtk-gnome"
+  replace = "greeter-session=lightdm-webkit2-greeter"
+  file = "/etc/lightdm/lightdm.conf"
+  system("sed -i s/#{default}/#{replace}/ #{file}")
 end
 
 def vim_plug()
