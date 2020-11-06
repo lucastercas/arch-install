@@ -96,7 +96,7 @@ packages:
     android-tools:
     pandoc:
     dnsutils:
-    acpilight:
+      #acpilight:
     light:
     clang:
     llvm:

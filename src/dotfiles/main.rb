@@ -44,6 +44,7 @@ def nvm()
   version = "v0.36.0"
   script_url = "https://raw.githubusercontent.com/nvm-sh/nvm/#{version}/install.sh"
   system("curl -fsSL #{script_url} | bash")
+  system("nvm install --lts")
 end
 
 def oh_my_zsh()
