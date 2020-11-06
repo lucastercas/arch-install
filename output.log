@@ -1,0 +1,14 @@
+total 52
+drwxr-xr-x 7 lucastercas lucastercas 4096 Nov  5 21:39 .
+drwxr-xr-x 3 lucastercas lucastercas 4096 Nov  4 22:36 ..
+drwxr-xr-x 8 lucastercas lucastercas 4096 Nov  5 21:39 .git
+-rw-r--r-- 1 lucastercas lucastercas    3 Nov  4 22:28 .gitignore
+-rw-r--r-- 1 lucastercas lucastercas 1088 Nov  4 22:28 README.md
+-rw-r--r-- 1 lucastercas lucastercas  241 Nov  4 22:28 TODO.md
+-rwxr-xr-x 1 lucastercas lucastercas  378 Nov  4 22:28 aur.sh
+drwxr-xr-x 4 lucastercas lucastercas 4096 Nov  4 22:28 configs
+drwxr-xr-x 2 lucastercas lucastercas 4096 Nov  4 22:28 docs
+-rw-r--r-- 1 lucastercas lucastercas  330 Nov  4 22:28 dotfiles.sh
+-rwxr-xr-x 1 lucastercas lucastercas  597 Nov  5 21:36 main.rb
+drwxr-xr-x 5 lucastercas lucastercas 4096 Nov  4 22:28 src
+drwxr-xr-x 4 lucastercas lucastercas 4096 Oct 18 15:51 yay

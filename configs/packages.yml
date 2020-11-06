@@ -117,6 +117,8 @@ packages:
     chafa:
     kubectl:
     ansible:
+    man-db:
+    man-pages:
   graphical:
     xfce4:
     xfce4-screenshooter:
@@ -174,3 +176,6 @@ packages:
     insomnia:
     polybar-git:
     google-chrome:
+    breeze-amber-cursor-theme:
+    pop-icon-theme-git:
+    pop-gtk-theme-git:
