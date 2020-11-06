@@ -18,6 +18,7 @@ def setup_dotfiles(config)
   
   vim_plug()
   themes()
+  refind()
 end
 
 def install_yay()
@@ -71,4 +72,9 @@ def vim_plug()
   puts("#--- installing vim plug---#")
   script_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs #{script_url}")
+end
+
+def refind()
+  puts("#--- setting bootloader as refind ---#")
+  system("refind-install")
 end
