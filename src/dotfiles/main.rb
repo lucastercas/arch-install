@@ -12,12 +12,12 @@ def setup_dotfiles(config)
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
   nvm()
-  puts("#--- install node lts ---#")
-  system("nvm install --lts")
-  vim_plug()
-  themes()
+  
   install_yay()
   install_aur_pkgs()
+  
+  vim_plug()
+  themes()
 end
 
 def install_yay()
@@ -35,6 +35,7 @@ def install_aur_pkgs()
   packages = read_yaml(packages_file)
   packages = packages['packages']['aur']
   packages.each do |pkg|
+    system("#--- installing #{pkg} ---#")
     system("yay -S pkg")
   end
 end
