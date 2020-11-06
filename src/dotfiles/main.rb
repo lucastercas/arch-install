@@ -54,6 +54,7 @@ end
 
 def oh_my_zsh()
   puts("#--- installing oh my zsh ---#")
+  system("rm -rf ${HOME}/.oh-my-zsh")
   script_url = "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
   system("curl -fsSL #{script_url} | bash")
 end
