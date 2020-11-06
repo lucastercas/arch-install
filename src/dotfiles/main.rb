@@ -28,14 +28,16 @@ end
 
 def install_aur_pkgs()
   puts("#--- installing aur packages ---#")
+  puts("#--- refreshing pacman keys ---#")
   system("sudo pacman-key --keyserver pool.sks-keyserver.net --refresh-keys") # Refresh GPG keys
+  puts("#--- adding dropbox key ---#")
   system("gpg --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E") # Add Dropbox key
 
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
   packages = packages['packages']['aur']
   packages.each do |pkg|
-    system("#--- installing #{pkg} ---#")
+    puts("#--- installing #{pkg} ---#")
     system("yay -S pkg")
   end
 end
