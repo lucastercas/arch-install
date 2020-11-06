@@ -168,6 +168,7 @@ packages:
     libreoffice:
     viewnior:
   aur:
+    - nvm
     - dropbox
     - altair
     - postman-bin
