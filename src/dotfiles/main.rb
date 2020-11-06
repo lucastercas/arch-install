@@ -28,10 +28,13 @@ end
 
 def install_aur_pkgs()
   puts("#--- installing aur packages ---#")
+  system("sudo pacman-key --keyserver pool.sks-keyserver.net --refresh-keys")
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
-  system("sudo pacman-key --keyserver pool.sks-keyserver.net --refresh-keys")
-  system("yay -S #{packages['packages']['aur'].keys.join(' ')}")
+  packages = packages['packages']['aur']
+  packages.each do |pkg|
+    system("yay -S pkg")
+  end
 end
 
 def nvm()

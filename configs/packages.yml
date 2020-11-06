@@ -149,7 +149,6 @@ packages:
     xorg-xsetroot:
     xorg-xrdb:
     xorg-xinput:
-    code:
     mousepad:
     zathura:
     gparted:
@@ -170,7 +169,6 @@ packages:
     viewnior:
   aur:
     dropbox:
-    spotify:
     altair:
     postman-bin:
     insomnia:
@@ -179,3 +177,5 @@ packages:
     breeze-amber-cursor-theme:
     pop-icon-theme-git:
     pop-gtk-theme-git:
+    visual-studio-code-bin:
+      #spotify:
