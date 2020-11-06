@@ -45,7 +45,7 @@ end
 def nvm()
   puts("#--- installing nvm ---#")
   system("yay -S nvm")
-  system("nvm install --lts")
+  system("source /usr/share/nvm/nvm.sh && nvm install --lts")
   # version = "v0.36.0"
   # script_url = "https://raw.githubusercontent.com/nvm-sh/nvm/#{version}/install.sh"
   # system("curl -fsSL #{script_url} | bash")
