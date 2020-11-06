@@ -11,9 +11,8 @@ def setup_dotfiles(config)
   system("git clone --bare #{dotfiles_git} ${HOME}/.cfg")
   system("git --git-dir=${HOME}/.cfg --work-tree=${HOME} checkout --force")
 
-  
-  nvm()
   install_yay()
+  nvm()
   install_aur_pkgs()
   
   vim_plug()
