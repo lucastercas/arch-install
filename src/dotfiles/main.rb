@@ -38,7 +38,7 @@ def install_aur_pkgs()
   packages = packages['packages']['aur']
   packages.each do |pkg|
     puts("#--- installing #{pkg} ---#")
-    system("yay -S pkg")
+    system("yay -S #{pkg}")
   end
 end
 

@@ -168,14 +168,14 @@ packages:
     libreoffice:
     viewnior:
   aur:
-    dropbox:
-    altair:
-    postman-bin:
-    insomnia:
-    polybar-git:
-    google-chrome:
-    breeze-amber-cursor-theme:
-    pop-icon-theme-git:
-    pop-gtk-theme-git:
-    visual-studio-code-bin:
+    - dropbox
+    - altair
+    - postman-bin
+    - insomnia
+    - polybar-git
+    - google-chrome
+    - breeze-amber-cursor-theme
+    - pop-icon-theme-git
+    - pop-gtk-theme-git
+    - visual-studio-code-bin
       #spotify:
