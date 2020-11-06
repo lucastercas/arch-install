@@ -171,7 +171,7 @@ packages:
     - dropbox
     - altair
     - postman-bin
-    - insomnia
+    # - insomnia
     - polybar-git
     - google-chrome
     - breeze-amber-cursor-theme
