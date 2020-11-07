@@ -10,8 +10,8 @@ packages:
     grub:
     gvim:
     os-prober:
-    linux:
-    linux-headers:
+    linux-lts:
+    linux-lts-headers:
     linux-firmware:
     networkmanager:
     netctl:
