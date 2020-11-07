@@ -20,6 +20,7 @@ packages:
     wget:
     zsh:
     zsh-completions:
+    bash-completion:
     pacman-contrib:
     xclip:
     ntp:
@@ -127,6 +128,7 @@ packages:
     network-manager-applet:
     nm-connection-editor:
     arandr:
+    autorandr:
     gtk2:
     gtk3:
     lightdm:

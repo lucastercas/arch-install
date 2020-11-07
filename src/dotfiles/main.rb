@@ -16,7 +16,7 @@ def setup_dotfiles(config)
   install_aur_pkgs()
   
   vim_plug()
-  themes()
+  greeter()
   refind()
 end
 
@@ -38,13 +38,13 @@ def install_aur_pkgs()
   packages = packages['packages']['aur']
   packages.each do |pkg|
     puts("#--- installing #{pkg} ---#")
-    system("yay --noconfirmc -S #{pkg}")
+    system("yay --noconfirm -S #{pkg}")
   end
 end
 
 def nvm()
   puts("#--- installing nvm ---#")
-  system("yay -S nvm")
+  system("yay --noconfirm -S nvm")
   system("bash -c 'source /usr/share/nvm/nvm.sh && nvm install --lts'")
   # version = "v0.36.0"
   # script_url = "https://raw.githubusercontent.com/nvm-sh/nvm/#{version}/install.sh"
@@ -57,20 +57,20 @@ def oh_my_zsh()
   system("rm -rf ${HOME}/.oh-my-zsh")
   script_url = "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
   system("curl -fsSL #{script_url} | bash")
-end
 
-def themes()
   puts("#--- installing spaceship ---#")
   spaceship_git = "https://github.com/denysdovhan/spaceship-prompt.git"
   zsh_path="${HOME}/.oh-my-zsh/custom"
   system("git clone #{spaceship_git} #{zsh_path}/themes/spaceship-prompt --depth=1")
   system("ln -s #{zsh_path}/themes/spaceship-prompt/spaceship.zsh-theme #{zsh_path}/themes/spaceship.zsh-theme")
+end
 
+def greeter()
   puts("#--- setting greeter to lightdm-webkit2-greeter")
   default = "#greeter-session=example-gtk-gnome"
   replace = "greeter-session=lightdm-webkit2-greeter"
   file = "/etc/lightdm/lightdm.conf"
-  system("sed -i s/#{default}/#{replace}/ #{file}")
+  system("sudo sed -i s/#{default}/#{replace}/ #{file}")
 end
 
 def vim_plug()
