@@ -1,7 +1,7 @@
 ---
 hostname: hyperion
 disks:
-  sda:
+  - name: sda
     size: 120GiB
     partitions:
       - number: "2"
