@@ -4,15 +4,29 @@ disks:
   sda:
     size: 120GiB
     partitions:
-      - number: 2
-        size: 71GiB
+      - number: "2"
+        name: root
         mount_point: /
-        type: ext4
-      - number: 1
-        size: 300MiB
-        type: fat32
+        size: 71GiB
+        fs_type: ext4
+        partition_type: "8300"
+      - number: "1"
+        name: efi
         mount_point: /boot/efi
-      - number: 3
-        size: 40GiB
+        size: 300MiB
+        fs_type: fat32
+        partition_type: ef00
+      - number: "3"
+        name: home
         mount_point: /home
-        type: ext4
+        size: 40GiB
+        fs_type: ext4
+        partition_type: "8302"
+services:
+  - NetworkManager
+  - lightdm
+  - ntpd
+  - docker
+  - bluetooth
+  - paccache
+  - ntpdate
