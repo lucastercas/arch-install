@@ -111,6 +111,7 @@ packages:
     mpc:
     clipmenu:
     wireguard-tools:
+    wireguard-lts:
     system-config-printer:
     neofetch:
     imagemagick:
