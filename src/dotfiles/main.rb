@@ -13,6 +13,7 @@ def setup_dotfiles(config)
 
   install_yay()
   nvm()
+  system("echo 'keyserver keyserver hkp://keys.gnupg.net:80' > ~/.gnupg/gpg.conf")
   install_aur_pkgs()
   
   vim_plug()
@@ -78,6 +79,7 @@ def vim_plug()
   script_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   system("curl -fLo ~/.vim/autoload/plug.vim --create-dirs #{script_url}")
   system("vim -c PlugInstall")
+  system("chdir ~/.config/coc/extensions && npm i")
 end
 
 def refind()
