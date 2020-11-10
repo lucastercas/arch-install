@@ -15,10 +15,6 @@ def setup_dotfiles(config)
   nvm()
   system("echo 'keyserver hkp://keys.gnupg.net:80' > ~/.gnupg/gpg.conf")
   install_aur_pkgs()
-  
-  vim_plug()
-  greeter()
-  refind()
 end
 
 def install_yay()
@@ -29,10 +25,11 @@ end
 
 def install_aur_pkgs()
   puts("#--- installing aur packages ---#")
+
   puts("#--- refreshing pacman keys ---#")
-  system("sudo pacman-key --keyserver pool.sks-keyserver.net --refresh-keys") # Refresh GPG keys
-  puts("#--- adding dropbox key ---#")
-  system("gpg --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E") # Add Dropbox key
+  keyserver = "hkp://keys.gnupg.net:80"
+  #system("echo 'keyserver #{keyserver}' > ~/.gnupg/gpg.conf")
+  system("sudo pacman-key --keyserver #{keyserver} --refresh-keys") # Refresh GPG keys
 
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
