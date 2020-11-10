@@ -13,7 +13,7 @@ def setup_dotfiles(config)
 
   install_yay()
   nvm()
-  system("echo 'keyserver keyserver hkp://keys.gnupg.net:80' > ~/.gnupg/gpg.conf")
+  system("echo 'keyserver hkp://keys.gnupg.net:80' > ~/.gnupg/gpg.conf")
   install_aur_pkgs()
   
   vim_plug()

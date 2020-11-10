@@ -36,7 +36,7 @@ end
 
 def set_locale()
   puts("#--- setting locale ---#")
-  system("arch-chroot /mnt ln -sf /usr/share/zoneinfo/Brazil/DeNoronha /etc/localtime")
+  system("arch-chroot /mnt ln -sf /usr/share/zoneinfo/America/Belem /etc/localtime")
   system("arch-chroot /mnt sed -i s/#pt_BR.UTF-8/pt_BR.UTF-8/ /etc/locale.gen")
   system("arch-chroot /mnt sed -i s/#en_US.UTF-8/en_US.UTF-8/ /etc/locale.gen")
   system("arch-chroot /mnt locale-gen")
