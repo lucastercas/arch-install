@@ -121,6 +121,8 @@ packages:
     ansible:
     man-db:
     man-pages:
+    the_silver_searcher:
+    ripgrep:
   graphical:
     xfce4:
     xfce4-screenshooter:
