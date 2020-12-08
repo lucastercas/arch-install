@@ -123,6 +123,7 @@ packages:
     man-pages:
     the_silver_searcher:
     ripgrep:
+    terraform:
   graphical:
     xfce4:
     xfce4-screenshooter:
