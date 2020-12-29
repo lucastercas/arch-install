@@ -17,6 +17,7 @@ packages:
     netctl:
     xterm:
     wpa_supplicant:
+    nmap:
     wget:
     zsh:
     zsh-completions:
@@ -184,5 +185,6 @@ packages:
     - breeze-amber-cursor-theme
     - pop-icon-theme-git
     - pop-gtk-theme-git
+    - zenmap
     - visual-studio-code-bin
       #spotify:
