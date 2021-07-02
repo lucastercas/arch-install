@@ -11,7 +11,7 @@ def setup_chroot(config)
   puts("#=== setting up chroot ===#")
   set_locale()
   set_mirrors()
-  
+
   packages_file = "configs/packages.yml"
   packages = read_yaml(packages_file)
 
@@ -28,7 +28,7 @@ def setup_chroot(config)
 
   puts("#--- hostname ---#")
   system("arch-chroot /mnt echo #{config['hostname']} >> /etc/hostname")
-  
+
   bootloader(config)
 
   services(config['services'].join(' '))
@@ -60,4 +60,3 @@ def install_packages(packages)
   puts("#--- installing packages")
   system("arch-chroot /mnt pacman -S --noconfirm #{packages.join(' ')}")
 end
-
